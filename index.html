@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildCore ERP — Construction Company ERP</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <!-- LOGIN PAGE -->
+    <div id="login-page" class="login-page">
+        <div class="login-container">
+            <div class="login-logo">
+                <i class="fas fa-hard-hat"></i>
+                <h1>BuildCore ERP</h1>
+                <p>Construction Company Management System</p>
+            </div>
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="login-email" value="admin@buildcore.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="login-password" value="demo123" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword()">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label class="checkbox-label">
+                        <input type="checkbox" checked> Remember me
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                <div class="demo-credentials">
+                    <p><strong>Demo Credentials:</strong></p>
+                    <p>Email: admin@buildcore.com</p>
+                    <p>Password: demo123</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN APP SHELL -->
+    <div id="app-shell" class="app-shell hidden">
+        <!-- SIDEBAR -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-hard-hat"></i>
+                <span class="sidebar-title">BuildCore ERP</span>
+                <button class="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-group">
+                    <div class="nav-group-title"><i class="fas fa-home"></i><span>General</span><i class="fas fa-chevron-down group-arrow"></i></div>
+                    <div class="nav-group-items">
+                        <a href="#/dashboard" class="nav-item" data-page="dashboard"><span>Dashboard</span></a>
+                        <a href="#/group" class="nav-item" data-page="group"><span>Group Dashboard</span></a>
+                        <a href="#/reports" class="nav-item" data-page="reports"><span>Reports</span></a>
+                    </div>
+                </div>
+                <div class="nav-group">
+                    <div class="nav-group-title"><i class="fas fa-users"></i><span>Attendance & Payroll</span><i class="fas fa-chevron-down group-arrow"></i></div>
+                    <div class="nav-group-items">
+                        <a href="#/hr/employees" class="nav-item" data-page="hr-employees"><span>Employees</span></a>
+                        <a href="#/hr/attendance" class="nav-item" data-page="hr-attendance"><span>Attendance</span></a>
+                        <a href="#/hr/leave" class="nav-item" data-page="hr-leave"><span>Leave Summary</span></a>
+                        <a href="#/hr/payroll" class="nav-item" data-page="hr-payroll"><span>Payroll Runs</span></a>
+                        <a href="#/hr/challans" class="nav-item" data-page="hr-challans"><span>Challans</span></a>
+                        <a href="#/hr/loans" class="nav-item" data-page="hr-loans"><span>Loans</span></a>
+                    </div>
+                </div>
+                <div class="nav-group">
+                    <div class="nav-group-title"><i class="fas fa-truck"></i><span>Machinery</span><i class="fas fa-chevron-down group-arrow"></i></div>
+                    <div class="nav-group-items">
+                        <a href="#/machinery" class="nav-item" data-page="machinery"><span>Asset Register</span></a>
+                        <a href="#/machinery/logbook" class="nav-item" data-page="machinery-logbook"><span>Logbook</span></a>
+                        <a href="#/machinery/fuel" class="nav-item" data-page="machinery-fuel"><span>Fuel</span></a>
+                        <a href="#/machinery/maintenance" class="nav-item" data-page="machinery-maintenance"><span>Maintenance</span></a>
+                        <a href="#/machinery/hire-bills" class="nav-item" data-page="machinery-hire-bills"><span>Hire Bills</span></a>
+                        <a href="#/machinery/categories" class="nav-item" data-page="machinery-categories"><span>Equipment Categories</span></a>
+                        <a href="#/machinery/doc-types" class="nav-item" data-page="machinery-doc-types"><span>Equipment Doc Types</span></a>
+                        <a href="#/machinery/rates" class="nav-item" data-page="machinery-rates"><span>Hire Rates</span></a>
+                    </div>
+                </div>
+                <div class="nav-group">
+                    <div class="nav-group-title"><i class="fas fa-project-diagram"></i><span>Projects</span><i class="fas fa-chevron-down group-arrow"></i></div>
+                    <div class="nav-group-items">
+                        <a href="#/projects/portfolio" class="nav-item" data-page="projects-portfolio"><span>Portfolio</span></a>
+                        <a href="#/projects/clients" class="nav-item" data-page="projects-clients"><span>Clients</span></a>
+                        <a href="#/projects/sites" class="nav-item" data-page="projects-sites"><span>Sites</span></a>
+                    </div>
+                </div>
+                <div class="nav-group">
+                    <div class="nav-group-title"><i class="fas fa-handshake"></i><span>Partners</span><i class="fas fa-chevron-down group-arrow"></i></div>
+                    <div class="nav-group-items">
+                        <a href="#/vendors" class="nav-item" data-page="vendors"><span>Vendors</span></a>
+                        <a href="#/contractors" class="nav-item" data-page="contractors"><span>Contractor Vault</span></a>
+                        <a href="#/contractors/rag" class="nav-item" data-page="contractors-rag"><span>RAG Matrix</span></a>
+                        <a href="#/bocw" class="nav-item" data-page="bocw"><span>BOCW Cess</span></a>
+                    </div>
+                </div>
+                <div class="nav-group">
+                    <div class="nav-group-title"><i class="fas fa-boxes"></i><span>Inventory</span><i class="fas fa-chevron-down group-arrow"></i></div>
+                    <div class="nav-group-items">
+                        <a href="#/inventory/stock" class="nav-item" data-page="inventory-stock"><span>Stock</span></a>
+                        <a href="#/inventory/purchases" class="nav-item" data-page="inventory-purchases"><span>Purchases</span></a>
+                        <a href="#/inventory/issues" class="nav-item" data-page="inventory-issues"><span>Issues</span></a>
+                        <a href="#/inventory/transfers" class="nav-item" data-page="inventory-transfers"><span>Transfers</span></a>
+                        <a href="#/inventory/payments" class="nav-item" data-page="inventory-payments"><span>Payments</span></a>
+                    </div>
+                </div>
+                <div class="nav-group">
+                    <div class="nav-group-title"><i class="fas fa-cog"></i><span>Settings</span><i class="fas fa-chevron-down group-arrow"></i></div>
+                    <div class="nav-group-items">
+                        <a href="#/settings/companies" class="nav-item" data-page="settings-companies"><span>Companies</span></a>
+                        <a href="#/settings/users" class="nav-item" data-page="settings-users"><span>Users</span></a>
+                        <a href="#/settings/roles" class="nav-item" data-page="settings-roles"><span>Roles & Permissions</span></a>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- HEADER -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search..." id="global-search">
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="header-icon" onclick="showNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <div class="user-menu" onclick="toggleUserMenu()">
+                        <div class="avatar">AK</div>
+                        <span class="user-name">Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="user-dropdown hidden" id="user-dropdown">
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </header>
+
+            <!-- PAGE CONTENT -->
+            <div id="page-content" class="page-content">
+                <!-- Dynamic content rendered here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- MODAL -->
+    <div id="modal-overlay" class="modal-overlay hidden" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 id="modal-title"></h3>
+                <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="modal-body" class="modal-body"></div>
+            <div id="modal-footer" class="modal-footer"></div>
+        </div>
+    </div>
+
+    <!-- CONFIRM DIALOG -->
+    <div id="confirm-overlay" class="modal-overlay hidden">
+        <div class="modal confirm-modal">
+            <div class="modal-header">
+                <h3 id="confirm-title">Confirm</h3>
+            </div>
+            <div class="modal-body">
+                <p id="confirm-message"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeConfirm(false)">Cancel</button>
+                <button class="btn btn-danger" id="confirm-btn" onclick="closeConfirm(true)">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/hr.js"></script>
+    <script src="js/inventory.js"></script>
+    <script src="js/plant.js"></script>
+    <script src="js/projects.js"></script>
+    <script src="js/partners.js"></script>
+    <script src="js/reports.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>
