@@ -23,6 +23,7 @@ function getDefaultData() {
             { id: 'DEMO-0014', name: 'Kamla Devi', department: 'Site Operations & Maintenance', designation: 'Helper', mobile: '9820000182', project: 'NH-48 O&M', company: 'Demo Constructions Pvt Ltd', status: 'Active', dob: '1991-12-01', gender: 'Female', email: '', address: '34 Nahargarh, Jaipur', joiningDate: '2022-08-01', type: 'Daily Wage', basicSalary: 9000, hra: 3600, conveyance: 1600, siteAllowance: 1500, pfApplicable: true, esicApplicable: true, bankName: 'State Bank of India', accountNo: '33221100998', ifsc: 'SBIN0007890', uan: '100123456803', docs: 1 },
             { id: 'DEMO-0015', name: 'Bheru Lal', department: 'Health, Safety & Environment', designation: 'Security Guard', mobile: '9820000195', project: 'NH-48 O&M', company: 'Demo Constructions Pvt Ltd', status: 'Active', dob: '1979-08-20', gender: 'Male', email: '', address: '56 Naila, Rajasthan', joiningDate: '2020-10-01', type: 'Full Time', basicSalary: 12000, hra: 4800, conveyance: 1600, siteAllowance: 2000, pfApplicable: true, esicApplicable: true, bankName: 'Central Bank', accountNo: '22110099887', ifsc: 'CBIN0005678', uan: '100123456804', docs: 2 }
         ],
+        punches: generatePunchData(),
         attendance: generateAttendanceData(),
         leaves: [
             { id: 'LV-001', employeeId: 'EMP-0001', employee: 'Ramesh Kumar', type: 'Leave Without Pay', from: '2026-11-02', to: '2026-11-03', days: 2, reason: 'Unpaid personal leave', status: 'Pending', remarks: '' },
@@ -206,6 +207,21 @@ function getDefaultData() {
             { machine: 'CAR-001', desc: 'Insurance Policy', detail: 'POL/2026/667145', due: 'expires 2026-08-10' }
         ]
     };
+}
+function generatePunchData() {
+    const punches = [];
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    for (let d = 1; d <= now.getDate(); d++) {
+        const dt = new Date(year, month, d);
+        const day = dt.getDay();
+        const dateStr = dt.toISOString().split('T')[0];
+        if (day === 0) { punches.push({ date: dateStr, day: 'Sunday', inTime: '', outTime: '', ot: '', status: 'Weekly Off' }); }
+        else if (d === now.getDate()) { punches.push({ date: dateStr, day: dt.toLocaleDateString('en-IN',{weekday:'long'}), inTime: '', outTime: '', ot: '', status: 'Today' }); }
+        else { const ot = d % 5 === 0 ? '2' : '0'; punches.push({ date: dateStr, day: dt.toLocaleDateString('en-IN',{weekday:'long'}), inTime: '09:00 am', outTime: ot==='2'?'08:00 pm':'06:00 pm', ot, status: 'Present' }); }
+    }
+    return punches;
 }
 function generateAttendanceData() {
     const today = new Date().toISOString().split('T')[0];

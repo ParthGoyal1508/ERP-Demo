@@ -12,6 +12,9 @@ function handleRoute(){
         case '/dashboard':renderDashboard(c);break;
         case '/group':renderGroupDashboard(c);break;
         case '/reports':renderReports(c);break;
+        case '/my/punch':renderMyPunch(c);break;
+        case '/my/leave':renderMyLeave(c);break;
+        case '/my/salary':renderMySalary(c);break;
         case '/hr/employees':renderEmployees(c);break;
         case '/hr/attendance':renderAttendance(c);break;
         case '/hr/leave':renderLeave(c);break;
