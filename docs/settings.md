@@ -199,13 +199,13 @@ The Employee Setup modal is accessed from the Employees page **Setup** button an
 | Aadhaar Card | AADHAAR | MandatoryNumber | 10 |
 | PAN Card | PAN | Number | 20 |
 | Bank Proof (passbook/cancelled cheque) | BANK_PROOF | Mandatory | 30 |
-| Photograph | PHOTO | Mandatory | — |
-| Driving License | DRIVING_LICENSE | — | — |
-| 10th Marksheet | MARKSHEET_10 | — | — |
-| 12th Marksheet | MARKSHEET_12 | — | — |
-| Degree Certificate | DEGREE | — | — |
-| Experience Letter | EXPERIENCE_LETTER | — | — |
-| Medical Fitness | MEDICAL_FITNESS | — | — |
+| Photograph | PHOTO | Mandatory | 40 |
+| Driving Licence | DRIVING_LICENCE | ExpiryNumber | 50 |
+| 10th Marksheet | MARKSHEET_10 | — | 60 |
+| 12th Marksheet | MARKSHEET_12 | — | 70 |
+| Degree Certificate | DEGREE | — | 80 |
+| Experience Letter | EXPERIENCE_LETTER | — | 90 |
+| Medical Fitness Certificate | MEDICAL_FITNESS | Expiry | 100 |
 | Police Verification | POLICE_VERIFICATION | — | 110 |
 | Offer Letter | OFFER_LETTER | — | 120 |
 | Appointment Letter | APPOINTMENT_LETTER | — | 130 |
@@ -225,6 +225,17 @@ The Employee Setup modal is accessed from the Employees page **Setup** button an
 | Sort Order | Number |
 
 **Footer:** Cancel | **"Create type"** (primary)
+
+**Edit behavior:**
+- Clicking the Edit (pencil) icon on any document type row opens the same "New document type" modal pre-filled with that row's data
+- Code field becomes read-only during edit
+- Button text changes to "Update type"
+- Toggle combinations determine Flags column value:
+  - Mandatory ON + Needs Document Number ON → "MandatoryNumber"
+  - Has Expiry Date ON + Needs Document Number ON → "ExpiryNumber"
+  - Has Expiry Date ON only → "Expiry"
+  - Needs Document Number ON only → "Number"
+  - Mandatory ON only → "Mandatory"
 
 **Behaviors:**
 - Mandatory documents affect the employee Documents progress bar (e.g. 3/3 docs)

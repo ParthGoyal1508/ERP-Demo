@@ -74,6 +74,115 @@ Tabs:
 
 ---
 
+### DAILY WORK REPORTS (`/projects/dwr`)
+
+**Layout:**
+- Page title "Daily Work Reports"
+- Top-right: **"+ New DWR"** button (primary)
+- Filters: Project dropdown | Date range | Supervisor
+
+**DWR table columns:**
+| Column | Description |
+|---|---|
+| Date | Report date |
+| Project | Project name |
+| Supervisor | Person who submitted |
+| Workers | Total workers on site |
+| Machinery | Number of machines deployed |
+| Progress | % completion of current activity |
+| Weather | Clear / Rainy / Overcast |
+| Status | Draft / Submitted / Approved |
+| Actions | View / Edit / Delete |
+
+**Pre-populated DWR entries:**
+| Date | Project | Supervisor | Workers | Machinery | Progress | Weather | Status |
+|---|---|---|---|---|---|---|---|
+| 24 Jul 2026 | NH-48 O&M | Suresh Sharma | 14 | 6 | 72% | Clear | Submitted |
+| 23 Jul 2026 | NH-48 O&M | Suresh Sharma | 12 | 5 | 68% | Clear | Approved |
+| 22 Jul 2026 | NH-48 O&M | Suresh Sharma | 15 | 7 | 65% | Rainy | Approved |
+| 24 Jul 2026 | NH-11 Widening | Rajendra Singh | 8 | 4 | 45% | Clear | Draft |
+| 23 Jul 2026 | NH-11 Widening | Rajendra Singh | 10 | 5 | 42% | Clear | Approved |
+
+**New/Edit DWR modal:**
+| Field | Type |
+|---|---|
+| Project | Dropdown (from projects list) |
+| Date | Date picker (defaults to today) |
+| Supervisor | Dropdown (from employees) |
+| Weather | Dropdown: Clear / Rainy / Overcast / Stormy |
+| Workers on Site | Number |
+| Machinery Deployed | Number |
+| Progress (%) | Number (0-100) |
+| Description of Work | Textarea |
+| Materials Used | Textarea (e.g. "Cement 50 bags, Steel 200 kg") |
+| Issues / Remarks | Textarea |
+| Status | Dropdown: Draft / Submitted |
+
+**On submit:** New row in table, toast "DWR saved successfully"
+
+**Behaviors:**
+- DWRs are the daily pulse of a construction site
+- Progress % tracks the overall physical completion
+- Supervisor is the person accountable for that day's work
+- Admin can approve submitted DWRs
+- DWR data feeds into Project P&L labour cost estimation
+
+---
+
+### PROJECT P&L (`/projects/pnl`)
+
+**Layout:**
+- Page title "Project P&L"
+- Project selector dropdown (top-left)
+- Period selector: Monthly / Quarterly / Yearly / Cumulative
+
+**P&L Summary Cards (top row):**
+| Card | Color | Value Source |
+|---|---|---|
+| Contract Value | Blue | From project data |
+| Revenue Booked | Green | Sum of revenue entries |
+| Total Expenses | Red | Sum of all cost categories |
+| Gross Profit | Purple | Revenue − Expenses |
+| Margin % | Orange | (Gross Profit / Revenue) × 100 |
+
+**Cost Breakdown Table:**
+| Category | Budget (₹) | Actual (₹) | Variance (₹) | Variance % |
+|---|---|---|---|---|
+| Labour | 45,00,000 | 38,50,000 | 6,50,000 | -14.4% (under) |
+| Materials | 60,00,000 | 52,00,000 | 8,00,000 | -13.3% (under) |
+| Machinery & Fuel | 30,00,000 | 28,75,000 | 1,25,000 | -4.2% (under) |
+| Subcontractors | 20,00,000 | 22,00,000 | -2,00,000 | +10% (over) |
+| Overheads | 10,00,000 | 9,50,000 | 50,000 | -5% (under) |
+| **Total** | **1,65,00,000** | **1,50,75,000** | **14,25,000** | **-8.6%** |
+
+**Revenue Section:**
+| Description | Amount (₹) | Date | Status |
+|---|---|---|---|
+| RA Bill #1 — Mobilisation Advance | 92,50,000 | 15 Apr 2026 | Received |
+| RA Bill #2 — Work done till May | 45,00,000 | 10 Jun 2026 | Received |
+| RA Bill #3 — Work done till Jul | 30,00,000 | 20 Jul 2026 | Pending |
+
+**P&L Statement:**
+| Line Item | Amount (₹) |
+|---|---|
+| Revenue Booked | 1,67,50,000 |
+| Less: Labour Cost | (38,50,000) |
+| Less: Material Cost | (52,00,000) |
+| Less: Machinery & Fuel | (28,75,000) |
+| Less: Subcontractors | (22,00,000) |
+| Less: Overheads | (9,50,000) |
+| **Gross Profit** | **16,75,000** |
+| **Margin %** | **10.0%** |
+
+**Behaviors:**
+- All values auto-derive from live data (payroll for labour, inventory for materials, fuel/hire bills for machinery, vendor payments for subcontractors)
+- Project selector filters all data to one project
+- Variance highlights: green (under budget), red (over budget)
+- Period selector changes the time window for actuals
+- "Export" button → toast "P&L report exported (mocked)"
+
+---
+
 ### CLIENTS (`/projects/clients`)
 
 **Layout:**

@@ -315,3 +315,106 @@ function numberToWords(num) {
     if (num > 0) { str += ones[num] + ' '; }
     return str.trim();
 }
+
+// ===== FACE ENROLMENT =====
+function renderFaceEnrolment(container) {
+    const data = loadData();
+    if (!data.faceEnrolment) data.faceEnrolment = { enrolled: false, date: null, photos: 0, consent: false };
+
+    function render() {
+        const fe = data.faceEnrolment;
+        const statusHtml = fe.enrolled
+            ? `<div style="display:flex;align-items:center;gap:8px;color:#27ae60;font-size:14px;"><i class="fas fa-check-circle"></i> Enrolled on ${formatDate(fe.date)}</div>`
+            : `<div style="display:flex;align-items:center;gap:8px;color:#6b7280;font-size:14px;"><i class="fas fa-lock"></i> Not enrolled yet.</div>`;
+
+        const photoGrid = Array.from({length: 5}, (_, i) => {
+            if (i < fe.photos) {
+                return `<div style="width:80px;height:80px;border-radius:8px;background:#e8f5e9;display:flex;align-items:center;justify-content:center;border:2px solid #27ae60;"><i class="fas fa-user" style="font-size:28px;color:#27ae60;"></i></div>`;
+            }
+            return `<div style="width:80px;height:80px;border-radius:8px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;border:2px dashed #d1d5db;"><i class="fas fa-camera" style="font-size:20px;color:#d1d5db;"></i></div>`;
+        }).join('');
+
+        container.innerHTML = `
+            <div class="page-header"><h1>Face Enrolment</h1></div>
+            <div class="card" style="max-width:600px;">
+                <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
+                    <span><i class="fas fa-user-circle"></i> Face enrolment — Ramesh Kumar</span>
+                    ${statusHtml}
+                </div>
+                <div style="padding:20px;">
+                    <p style="color:#6b7280;margin-bottom:20px;">Capture 3–5 photos, varying the angle and lighting slightly between them.</p>
+
+                    <div style="margin-bottom:24px;">
+                        <h4 style="margin-bottom:12px;">PHOTOS (${fe.photos}/5)</h4>
+                        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
+                            ${photoGrid}
+                        </div>
+                        ${fe.photos < 5 && !fe.enrolled ? `<button class="btn btn-secondary" onclick="capturePhoto()"><i class="fas fa-camera"></i> Capture</button>` : ''}
+                    </div>
+
+                    <div style="border-top:1px solid #e5e7eb;padding-top:20px;margin-bottom:20px;">
+                        <h4 style="margin-bottom:12px;">BIOMETRIC CONSENT</h4>
+                        <div class="form-group" style="margin-bottom:12px;">
+                            <select class="form-control" id="face-consent-method" style="width:100%;">
+                                <option>Signed paper form (scanned)</option>
+                                <option>Digital consent (in-app)</option>
+                                <option>Verbal (witnessed)</option>
+                            </select>
+                        </div>
+                        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px;">
+                            <input type="checkbox" id="face-consent" ${fe.consent ? 'checked' : ''} onchange="updateEnrolBtn()">
+                            <span>This worker was told what their face data is used for and has consented (v1-2026-07)</span>
+                        </label>
+                        <p style="font-size:11px;color:#888;margin-top:8px;"><i class="fas fa-info-circle"></i> Written consent is required for biometric data and is recorded against this enrolment. It can be withdrawn later.</p>
+                    </div>
+
+                    <div style="display:flex;gap:10px;">
+                        ${fe.enrolled
+                            ? `<button class="btn btn-secondary" onclick="reEnrol()"><i class="fas fa-redo"></i> Re-enrol</button>`
+                            : `<button class="btn btn-primary" id="enrol-btn" ${fe.photos >= 3 && fe.consent ? '' : 'disabled'} onclick="submitEnrolment()"><i class="fas fa-check"></i> Enrol</button>`
+                        }
+                    </div>
+                </div>
+            </div>`;
+    }
+
+    window.capturePhoto = function() {
+        if (data.faceEnrolment.photos >= 5) return;
+        data.faceEnrolment.photos++;
+        saveData(data);
+        toast('Photo captured', 'success');
+        render();
+    };
+
+    window.updateEnrolBtn = function() {
+        const btn = document.getElementById('enrol-btn');
+        if (!btn) return;
+        const consent = document.getElementById('face-consent')?.checked;
+        btn.disabled = !(data.faceEnrolment.photos >= 3 && consent);
+    };
+
+    window.submitEnrolment = function() {
+        const consent = document.getElementById('face-consent')?.checked;
+        if (data.faceEnrolment.photos < 3) { toast('Minimum 3 photos required', 'error'); return; }
+        if (!consent) { toast('Consent is required', 'error'); return; }
+        data.faceEnrolment.enrolled = true;
+        data.faceEnrolment.date = new Date().toISOString().split('T')[0];
+        data.faceEnrolment.consent = true;
+        saveData(data);
+        toast('Face enrolled successfully', 'success');
+        render();
+    };
+
+    window.reEnrol = function() {
+        showConfirm('Re-enrol', 'This will replace your existing face data. Continue?', function(confirmed) {
+            if (confirmed) {
+                data.faceEnrolment = { enrolled: false, date: null, photos: 0, consent: false };
+                saveData(data);
+                toast('Face data cleared. Please re-enrol.', 'info');
+                render();
+            }
+        });
+    };
+
+    render();
+}

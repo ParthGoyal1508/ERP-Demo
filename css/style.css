@@ -148,13 +148,21 @@ table .actions .btn-view:hover { background: #f5f3ff; }
 
 /* ===== MODAL ===== */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 9999; }
-.modal { background: #fff; border-radius: 12px; width: 600px; max-width: 90vw; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.modal { background: #fff; border-radius: 12px; width: 750px; max-width: 90vw; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
 .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid #e5e7eb; }
 .modal-header h3 { font-size: 16px; font-weight: 600; }
 .modal-close { font-size: 18px; color: #6b7280; }
 .modal-body { padding: 20px; overflow-y: auto; flex: 1; }
 .modal-footer { padding: 12px 20px; border-top: 1px solid #e5e7eb; display: flex; justify-content: flex-end; gap: 8px; }
 .confirm-modal { width: 400px; }
+
+/* ===== EMPLOYEE TABBED MODAL ===== */
+.emp-modal-tabs { display: flex; gap: 0; border-bottom: 2px solid #e5e7eb; margin: -20px -20px 20px -20px; padding: 0 20px; overflow-x: auto; }
+.emp-tab-btn { padding: 10px 16px; font-size: 13px; font-weight: 500; color: #6b7280; background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+.emp-tab-btn:hover { color: #2563eb; }
+.emp-tab-btn.active { color: #2563eb; border-bottom-color: #2563eb; font-weight: 600; }
+.emp-tab-content { min-height: 280px; }
+.onboarding-checklist label:hover { background: #f9fafb; }
 
 /* ===== FORMS IN MODALS ===== */
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }

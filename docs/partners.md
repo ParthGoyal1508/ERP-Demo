@@ -7,7 +7,9 @@
 ```
 Partners
   ├── Vendors
+  ├── Vendor Categories
   ├── Contractor Vault
+  ├── Monthly Compliance
   ├── RAG Matrix
   └── BOCW Cess
 ```
@@ -81,6 +83,50 @@ Partners
 
 ---
 
+### VENDOR CATEGORIES (`/vendors/categories`)
+
+**Layout:**
+- Page title "Vendor Categories"
+- Top-right: **"+ Add Category"** button (primary)
+
+**Purpose:**
+- Manage vendor type classifications (Material, Fuel, Hire, Service, Transport, Subcontractor)
+- Categories populate the "Type" dropdown when adding/editing vendors
+- "Deals in" tags help procurement teams quickly identify vendor capabilities
+
+**Table columns:**
+| Column | Description |
+|---|---|
+| # | Row number |
+| Category | Category name (e.g. Material, Fuel, Hire) |
+| Description | Brief description of the category |
+| Vendors | Count of vendors assigned to this category |
+| Actions | Edit / Delete |
+
+**Pre-populated categories:**
+| Category | Description |
+|---|---|
+| Material | Building materials, cement, steel, aggregates |
+| Fuel | Diesel, petrol, lubricants |
+| Hire | Equipment and machinery on hire |
+| Service | Repair, maintenance, spare parts |
+| Transport | Material transport and logistics |
+| Subcontractor | Civil/electrical/mechanical subcontractors |
+
+**Add/Edit Category modal:**
+| Field | Type |
+|---|---|
+| Name | Text (required) |
+| Description | Text |
+
+**Behaviors:**
+- Full CRUD for vendor categories
+- Vendor count column shows how many vendors are in each category
+- Deleting a category does not affect existing vendors already assigned to it
+- Categories feed the Type dropdown in Vendor add/edit forms
+
+---
+
 ### CONTRACTOR VAULT (`/contractors`)
 
 **Layout:**
@@ -144,6 +190,73 @@ Partners
 
 ---
 
+### CONTRACTOR MONTHLY COMPLIANCE (`/contractors/compliance`)
+
+**Layout:**
+- Page title "Monthly Compliance Submissions"
+- Top-right: **"+ Record Submission"** button (primary)
+- Filters: Contractor dropdown | Status dropdown (Verified / Partial / Missing) | Month picker (input type="month")
+
+**Purpose:**
+- Record monthly PF and ESIC challan submissions by labour contractors
+- Track payment amounts, challan numbers, and dates
+- Verify submissions and auto-update the RAG Matrix status for each contractor/month
+
+**Table columns:**
+| Column | Description |
+|---|---|
+| Contractor | Contractor name |
+| Month | Month/Year (e.g. May 2026) |
+| PF Challan | PF challan number (red "Not submitted" if blank) |
+| PF Amount | PF amount (₹) |
+| PF Date | PF payment date |
+| ESIC Challan | ESIC challan number (red "Not submitted" if blank) |
+| ESIC Amount | ESIC amount (₹) |
+| ESIC Date | ESIC payment date |
+| Status | Verified (green) / Partial (yellow) / Missing (red) / Submitted (yellow) |
+| Actions | Edit / Verify |
+
+**Pre-populated mock data:**
+| Contractor | Month | PF Challan | PF Amt | ESIC Challan | ESIC Amt | Status |
+|---|---|---|---|---|---|---|
+| Shree Balaji Labour Co | May 2026 | PF-2026-05-BLJ | ₹42,000 | ESIC-2026-05-BLJ | ₹18,500 | Verified |
+| Shree Balaji Labour Co | Jun 2026 | — | — | — | — | Missing |
+| Rajasthan Labour Services | May 2026 | PF-2026-05-RLS | ₹65,000 | ESIC-2026-05-RLS | ₹28,000 | Verified |
+| Rajasthan Labour Services | Jun 2026 | PF-2026-06-RLS | ₹63,000 | ESIC-2026-06-RLS | ₹27,000 | Verified |
+| Shree Balaji Labour Co | Jul 2026 | PF-2026-07-BLJ | ₹44,000 | — | — | Partial |
+
+**Record Submission modal:**
+| Field | Type |
+|---|---|
+| Contractor | Dropdown (from Contractor Vault) |
+| Month | Dropdown (Apr 2026 → Mar 2027) |
+| PF Challan No. | Text |
+| PF Amount (₹) | Number |
+| PF Payment Date | Date |
+| ESIC Challan No. | Text |
+| ESIC Amount (₹) | Number |
+| ESIC Payment Date | Date |
+
+**Status auto-derivation:**
+- Both PF and ESIC submitted → "Submitted"
+- Only one submitted → "Partial"
+- Neither submitted → "Missing"
+- Admin clicks Verify → "Verified"
+
+**RAG Matrix auto-update:**
+- When a compliance submission is saved or verified, the RAG Matrix for that contractor + month is automatically updated:
+  - Verified → 🟢 Green
+  - Submitted / Partial → 🟡 Yellow
+  - Missing → 🔴 Red
+
+**Behaviors:**
+- Full CRUD with filter by contractor and status
+- Verify button only appears for non-verified submissions
+- Verification records who verified and when
+- RAG Matrix auto-syncs on every save/verify action
+
+---
+
 ### BOCW CESS (`/bocw`)
 
 **Layout:**
@@ -178,8 +291,10 @@ Partners
 ### CROSS-MODULE BEHAVIORS
 
 - Vendors populate supplier dropdowns in Inventory (Purchases, Payments) and Machinery (Fuel, Hire Bills)
+- **Vendor Categories** populate the "Type" dropdown in Vendor add/edit forms
 - Vendor TDS % used for auto-calculating TDS on Hire Bills and Purchase payments
 - Contractor Vault compliance status feeds into the RAG Matrix view
+- **Monthly Compliance submissions** auto-update RAG Matrix colours (Verified→green, Partial→yellow, Missing→red)
 - RAG Matrix provides the Group Dashboard-level compliance overview
 - BOCW Cess references project contract values from Projects → Portfolio
 - All data persists in localStorage

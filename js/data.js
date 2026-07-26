@@ -21,7 +21,11 @@ function getDefaultData() {
             { id: 'DEMO-0012', name: 'Sita Devi', department: 'Site Operations & Maintenance', designation: 'Helper', mobile: '9820000156', project: 'NH-48 O&M', company: 'Demo Constructions Pvt Ltd', status: 'Active', dob: '1990-06-15', gender: 'Female', email: '', address: '78 Amber Road, Jaipur', joiningDate: '2022-04-01', type: 'Daily Wage', basicSalary: 9000, hra: 3600, conveyance: 1600, siteAllowance: 1500, pfApplicable: true, esicApplicable: true, bankName: 'Punjab National Bank', accountNo: '55443322110', ifsc: 'PUNB0005678', uan: '100123456801', docs: 0 },
             { id: 'DEMO-0013', name: 'Gopal Nath', department: 'Site Operations & Maintenance', designation: 'Helper', mobile: '9820000169', project: 'NH-48 O&M', company: 'Demo Constructions Pvt Ltd', status: 'Active', dob: '1988-03-22', gender: 'Male', email: '', address: '12 Amer, Rajasthan', joiningDate: '2022-06-15', type: 'Daily Wage', basicSalary: 9000, hra: 3600, conveyance: 1600, siteAllowance: 1500, pfApplicable: true, esicApplicable: true, bankName: 'Bank of Baroda', accountNo: '44332211009', ifsc: 'BARB0005678', uan: '100123456802', docs: 0 },
             { id: 'DEMO-0014', name: 'Kamla Devi', department: 'Site Operations & Maintenance', designation: 'Helper', mobile: '9820000182', project: 'NH-48 O&M', company: 'Demo Constructions Pvt Ltd', status: 'Active', dob: '1991-12-01', gender: 'Female', email: '', address: '34 Nahargarh, Jaipur', joiningDate: '2022-08-01', type: 'Daily Wage', basicSalary: 9000, hra: 3600, conveyance: 1600, siteAllowance: 1500, pfApplicable: true, esicApplicable: true, bankName: 'State Bank of India', accountNo: '33221100998', ifsc: 'SBIN0007890', uan: '100123456803', docs: 1 },
-            { id: 'DEMO-0015', name: 'Bheru Lal', department: 'Health, Safety & Environment', designation: 'Security Guard', mobile: '9820000195', project: 'NH-48 O&M', company: 'Demo Constructions Pvt Ltd', status: 'Active', dob: '1979-08-20', gender: 'Male', email: '', address: '56 Naila, Rajasthan', joiningDate: '2020-10-01', type: 'Full Time', basicSalary: 12000, hra: 4800, conveyance: 1600, siteAllowance: 2000, pfApplicable: true, esicApplicable: true, bankName: 'Central Bank', accountNo: '22110099887', ifsc: 'CBIN0005678', uan: '100123456804', docs: 2 }
+            { id: 'DEMO-0015', name: 'Bheru Lal', department: 'Health, Safety & Environment', designation: 'Security Guard', mobile: '9820000195', project: 'NH-48 O&M', company: 'Demo Constructions Pvt Ltd', status: 'Active', dob: '1979-08-20', gender: 'Male', email: '', address: '56 Naila, Rajasthan', joiningDate: '2020-10-01', type: 'Full Time', basicSalary: 12000, hra: 4800, conveyance: 1600, siteAllowance: 2000, pfApplicable: true, esicApplicable: true, bankName: 'Central Bank', accountNo: '22110099887', ifsc: 'CBIN0005678', uan: '100123456804', docs: 2 },
+            { id: 'DEMO-0101', name: 'Naresh Gupta', department: 'Civil Engineering', designation: 'Site Engineer', mobile: '9820001001', project: 'SH-22 Maintenance', company: 'Demo Infra Projects Pvt Ltd', status: 'Active', dob: '1991-03-10', gender: 'Male', email: 'naresh@demo.com', address: '12 Pratap Nagar, Jaipur', joiningDate: '2023-01-15', type: 'Full Time', basicSalary: 22000, hra: 8800, conveyance: 1600, siteAllowance: 3000, pfApplicable: true, esicApplicable: true, bankName: 'HDFC Bank', accountNo: '10203040506', ifsc: 'HDFC0009876', uan: '100123456810', docs: 0 },
+            { id: 'DEMO-0102', name: 'Mahesh Jangid', department: 'Site Operations & Maintenance', designation: 'Supervisor', mobile: '9820001002', project: 'SH-22 Maintenance', company: 'Demo Infra Projects Pvt Ltd', status: 'Active', dob: '1986-07-22', gender: 'Male', email: 'mahesh@demo.com', address: '45 Jagatpura, Jaipur', joiningDate: '2023-03-01', type: 'Full Time', basicSalary: 18000, hra: 7200, conveyance: 1600, siteAllowance: 2400, pfApplicable: true, esicApplicable: true, bankName: 'State Bank of India', accountNo: '20304050607', ifsc: 'SBIN0004567', uan: '100123456811', docs: 0 },
+            { id: 'DEMO-0103', name: 'Ram Singh', department: 'Electrical & Mechanical', designation: 'Electrician', mobile: '9820001003', project: 'SH-22 Maintenance', company: 'Demo Infra Projects Pvt Ltd', status: 'Active', dob: '1988-11-05', gender: 'Male', email: '', address: '78 Tonk Road, Jaipur', joiningDate: '2023-06-01', type: 'Full Time', basicSalary: 16000, hra: 6400, conveyance: 1600, siteAllowance: 2400, pfApplicable: true, esicApplicable: true, bankName: 'Bank of Baroda', accountNo: '30405060708', ifsc: 'BARB0003456', uan: '100123456812', docs: 0 },
+            { id: 'DEMO-0104', name: 'Shankar Lal', department: 'Plant & Machinery', designation: 'Operator', mobile: '9820001004', project: 'SH-22 Maintenance', company: 'Demo Infra Projects Pvt Ltd', status: 'Active', dob: '1984-09-18', gender: 'Male', email: '', address: '23 Durgapura, Jaipur', joiningDate: '2023-04-15', type: 'Full Time', basicSalary: 15000, hra: 6000, conveyance: 1600, siteAllowance: 2400, pfApplicable: true, esicApplicable: true, bankName: 'Punjab National Bank', accountNo: '40506070809', ifsc: 'PUNB0007890', uan: '100123456813', docs: 0 }
         ],
         punches: generatePunchData(),
         attendance: generateAttendanceData(),
@@ -37,13 +41,23 @@ function getDefaultData() {
             { id: 'LOAN-002', employeeId: 'DEMO-0004', employee: 'Amit Kumar', amount: 30000, emi: 3000, disbursedOn: '2026-05-01', paid: 9000, balance: 21000, status: 'Active', reason: 'Medical expenses' }
         ],
         assets: [
-            { id: 'ACP-001', name: 'Atlas Copco XAS 186', class: 'Equipment', category: 'Air Compressor', ownership: 'Owned', status: 'Active', site: 'NH-11 Widening', reading: '1,981.3 hrs', utilization: 93.9, flags: 0 },
+            { id: 'ACP-001', name: 'Atlas Copco XAS 186', class: 'Equipment', category: 'Air Compressor', ownership: 'Owned', status: 'Active', site: 'NH-11 Widening', reading: '1,981.3 hrs', utilization: 93.9, flags: 0, documents: [] },
             { id: 'ACP-002', name: 'Atlas Copco XAS 186', class: 'Equipment', category: 'Air Compressor', ownership: 'Owned', status: 'Active', site: 'NH-11 Widening', reading: '2,841.3 hrs', utilization: 81.4, flags: 0 },
             { id: 'BHL-001', name: 'JCB 3DX Backhoe Loader', class: 'Plant', category: 'Backhoe Loader', ownership: 'Hired', status: 'Active', site: 'NH-48 O&M', reading: '3,120 hrs', utilization: 86.7, flags: 0 },
             { id: 'BHL-002', name: 'CASE 770EX', class: 'Plant', category: 'Backhoe Loader', ownership: 'Owned', status: 'Active', site: 'NH-48 O&M', reading: '3,499.8 hrs', utilization: 65.0, flags: 0 },
             { id: 'BDZ-001', name: 'BEML BD80', class: 'Plant', category: 'Bulldozer', ownership: 'Owned', status: 'Active', site: 'NH-11 Widening', reading: '5,959.7 hrs', utilization: 79.2, flags: 0 },
-            { id: 'BTK-001', name: 'Ashok Leyland 2518 (20 KL)', class: 'Vehicle', category: 'Bitumen Tanker', ownership: 'Owned', status: 'Active', site: 'NH-11 Widening', reading: '38,194 km', utilization: 98.9, flags: 1 },
-            { id: 'CAR-001', name: 'Toyota Innova Crysta', class: 'Vehicle', category: 'Car', ownership: 'Owned', status: 'Active', site: 'NH-48 O&M', reading: '75,771 km', utilization: 97.8, flags: 2 },
+            { id: 'BTK-001', name: 'Ashok Leyland 2518 (20 KL)', class: 'Vehicle', category: 'Bitumen Tanker', ownership: 'Owned', status: 'Active', site: 'NH-11 Widening', reading: '38,194 km', utilization: 98.9, flags: 1, documents: [
+                { type: 'RC', number: 'RJ14GA1234', expiry: '' },
+                { type: 'INSURANCE', number: 'POL-2026-BTK-001', expiry: '2026-08-15' },
+                { type: 'PUC_POLLUTION', number: 'PUC-BTK-001', expiry: '2026-08-01' },
+                { type: 'FITNESS', number: 'FIT-BTK-001', expiry: '2027-03-31' }
+            ] },
+            { id: 'CAR-001', name: 'Toyota Innova Crysta', class: 'Vehicle', category: 'Car', ownership: 'Owned', status: 'Active', site: 'NH-48 O&M', reading: '75,771 km', utilization: 97.8, flags: 2, documents: [
+                { type: 'RC', number: 'RJ14SA5678', expiry: '' },
+                { type: 'INSURANCE', number: 'POL-2026-CAR-001', expiry: '2026-09-30' },
+                { type: 'PUC_POLLUTION', number: 'PUC-CAR-001', expiry: '2026-07-30' },
+                { type: 'FITNESS', number: 'FIT-CAR-001', expiry: '2026-12-31' }
+            ] },
             { id: 'AMB-001', name: 'Force Traveller Ambulance', class: 'Vehicle', category: 'Ambulance', ownership: 'Owned', status: 'Active', site: 'NH-48 O&M', reading: '46,763 km', utilization: 94.8, flags: 0 },
             { id: 'CMX-001', name: 'Safari 10/7 CFT', class: 'Equipment', category: 'Concrete Mixer', ownership: 'Owned', status: 'Active', site: 'NH-48 O&M', reading: '2,010.9 hrs', utilization: 80.4, flags: 0 },
             { id: 'DG-001', name: 'Kirloskar 40 kVA', class: 'Equipment', category: 'Diesel Generator', ownership: 'Hired', status: 'Active', site: 'NH-48 O&M', reading: '4,500 hrs', utilization: 72.0, flags: 0 },
@@ -146,6 +160,13 @@ function getDefaultData() {
             { contractorId: 'CON-001', contractor: 'Shree Balaji Labour Co', months: { 'Apr 2026': 'red', 'May 2026': 'green', 'Jun 2026': 'red', 'Jul 2026': 'yellow' } },
             { contractorId: 'CON-002', contractor: 'Rajasthan Labour Services', months: { 'Apr 2026': 'green', 'May 2026': 'green', 'Jun 2026': 'green', 'Jul 2026': 'green' } }
         ],
+        contractorCompliance: [
+            { id: 'CC-001', contractorId: 'CON-001', contractor: 'Shree Balaji Labour Co', month: 'May 2026', pfChallan: 'PF-2026-05-BLJ', pfAmount: 42000, pfDate: '2026-06-12', esicChallan: 'ESIC-2026-05-BLJ', esicAmount: 18500, esicDate: '2026-06-12', status: 'Verified', verifiedBy: 'Admin', verifiedOn: '2026-06-15' },
+            { id: 'CC-002', contractorId: 'CON-001', contractor: 'Shree Balaji Labour Co', month: 'Jun 2026', pfChallan: '', pfAmount: 0, pfDate: '', esicChallan: '', esicAmount: 0, esicDate: '', status: 'Missing', verifiedBy: '', verifiedOn: '' },
+            { id: 'CC-003', contractorId: 'CON-002', contractor: 'Rajasthan Labour Services', month: 'May 2026', pfChallan: 'PF-2026-05-RLS', pfAmount: 65000, pfDate: '2026-06-10', esicChallan: 'ESIC-2026-05-RLS', esicAmount: 28000, esicDate: '2026-06-10', status: 'Verified', verifiedBy: 'Admin', verifiedOn: '2026-06-12' },
+            { id: 'CC-004', contractorId: 'CON-002', contractor: 'Rajasthan Labour Services', month: 'Jun 2026', pfChallan: 'PF-2026-06-RLS', pfAmount: 63000, pfDate: '2026-07-08', esicChallan: 'ESIC-2026-06-RLS', esicAmount: 27000, esicDate: '2026-07-08', status: 'Verified', verifiedBy: 'Admin', verifiedOn: '2026-07-10' },
+            { id: 'CC-005', contractorId: 'CON-001', contractor: 'Shree Balaji Labour Co', month: 'Jul 2026', pfChallan: 'PF-2026-07-BLJ', pfAmount: 44000, pfDate: '2026-07-22', esicChallan: '', esicAmount: 0, esicDate: '', status: 'Partial', verifiedBy: '', verifiedOn: '' }
+        ],
         bocwCess: [
             { id: 'BOCW-001', project: 'NH-48 O&M', contractValue: 85000000, cessRate: 1, cessLiability: 850000, paid: 600000, balance: 250000, lastPayment: '2026-06-15', status: 'Partial' },
             { id: 'BOCW-002', project: 'NH-11 Widening', contractValue: 65000000, cessRate: 1, cessLiability: 650000, paid: 650000, balance: 0, lastPayment: '2026-05-20', status: 'Paid' },
@@ -181,6 +202,112 @@ function getDefaultData() {
             { id: 'PAY-004', date: '2026-07-15', vendor: 'Bansal Building Materials', amount: 50000, mode: 'BANK', ref: 'UTR2607150042', allocatedBills: 1 }
         ],
         categories: ['CEMENT', 'AGGREGATE', 'STEEL', 'BRICKS', 'SAND', 'PAINT', 'ELECTRICAL', 'PLUMBING'],
+        itemMasters: [
+            { id: 'IM-001', name: 'Cement OPC 53 Grade', category: 'CEMENT', unit: 'BAG', description: 'Ordinary Portland Cement 53 Grade' },
+            { id: 'IM-002', name: 'Cement OPC 43 Grade', category: 'CEMENT', unit: 'BAG', description: 'Ordinary Portland Cement 43 Grade' },
+            { id: 'IM-003', name: 'Cement PPC', category: 'CEMENT', unit: 'BAG', description: 'Portland Pozzolana Cement' },
+            { id: 'IM-004', name: 'Aggregate 20mm', category: 'AGGREGATE', unit: 'CUM', description: 'Coarse aggregate 20mm nominal size' },
+            { id: 'IM-005', name: 'Aggregate 10mm', category: 'AGGREGATE', unit: 'CUM', description: 'Coarse aggregate 10mm nominal size' },
+            { id: 'IM-006', name: 'TMT Steel 12mm', category: 'STEEL', unit: 'KG', description: 'TMT reinforcement bar 12mm Fe500D' },
+            { id: 'IM-007', name: 'TMT Steel 16mm', category: 'STEEL', unit: 'KG', description: 'TMT reinforcement bar 16mm Fe500D' },
+            { id: 'IM-008', name: 'TMT Steel 8mm', category: 'STEEL', unit: 'KG', description: 'TMT reinforcement bar 8mm Fe500D' },
+            { id: 'IM-009', name: 'River Sand', category: 'SAND', unit: 'CUM', description: 'Fine aggregate — river sand Zone II' },
+            { id: 'IM-010', name: 'M-Sand', category: 'SAND', unit: 'CUM', description: 'Manufactured sand' },
+            { id: 'IM-011', name: 'Fly Ash Bricks', category: 'BRICKS', unit: 'NOS', description: 'Standard fly ash bricks 230×110×75' },
+            { id: 'IM-012', name: 'Bitumen VG-30', category: 'AGGREGATE', unit: 'MT', description: 'Viscosity grade 30 bitumen' }
+        ],
+        vendorCategories: [
+            { id: 'VC-001', name: 'Material', description: 'Building materials, cement, steel, aggregates' },
+            { id: 'VC-002', name: 'Fuel', description: 'Diesel, petrol, lubricants' },
+            { id: 'VC-003', name: 'Hire', description: 'Equipment and machinery on hire' },
+            { id: 'VC-004', name: 'Service', description: 'Repair, maintenance, spare parts' },
+            { id: 'VC-005', name: 'Transport', description: 'Material transport and logistics' },
+            { id: 'VC-006', name: 'Subcontractor', description: 'Civil/electrical/mechanical subcontractors' }
+        ],
+        empSetup: {
+            codeSeries: [
+                { id: 'CS-1', prefix: 'EMP', company: 'Demo Constructions Pvt Ltd', description: 'Default series' },
+                { id: 'CS-2', prefix: 'DEMO', company: 'Demo Constructions Pvt Ltd', description: 'Demo series' },
+                { id: 'CS-3', prefix: 'DEMO', company: 'Demo Infra Projects Pvt Ltd', description: 'Infra series' },
+                { id: 'CS-4', prefix: 'CONT', company: 'All', description: 'Contractors' }
+            ],
+            departments: [
+                { id: 'DEPT-1', name: 'Civil Engineering' },
+                { id: 'DEPT-2', name: 'Accounts & Finance' },
+                { id: 'DEPT-3', name: 'Site Operations & Maintenance' },
+                { id: 'DEPT-4', name: 'Plant & Machinery' },
+                { id: 'DEPT-5', name: 'Quality Assurance & Control' },
+                { id: 'DEPT-6', name: 'Electrical & Mechanical' },
+                { id: 'DEPT-7', name: 'Stores & Procurement' },
+                { id: 'DEPT-8', name: 'Health, Safety & Environment' }
+            ],
+            designations: [
+                { id: 'DESG-1', name: 'Project Manager' },
+                { id: 'DESG-2', name: 'Site Engineer' },
+                { id: 'DESG-3', name: 'Senior Site Engineer' },
+                { id: 'DESG-4', name: 'Accountant' },
+                { id: 'DESG-5', name: 'Store Keeper' },
+                { id: 'DESG-6', name: 'Supervisor' },
+                { id: 'DESG-7', name: 'Electrician' },
+                { id: 'DESG-8', name: 'Mechanic / Fitter' },
+                { id: 'DESG-9', name: 'Plant Operator' },
+                { id: 'DESG-10', name: 'Mason' },
+                { id: 'DESG-11', name: 'Helper' },
+                { id: 'DESG-12', name: 'Security Guard' },
+                { id: 'DESG-13', name: 'Quality Control Engineer' }
+            ],
+            documentTypes: [
+                { id: 'DT-1', code: 'AADHAAR', name: 'Aadhaar Card', mandatory: true, hasExpiry: false, hasNumber: true, sort: 10 },
+                { id: 'DT-2', code: 'PAN', name: 'PAN Card', mandatory: false, hasExpiry: false, hasNumber: true, sort: 20 },
+                { id: 'DT-3', code: 'BANK_PROOF', name: 'Bank Proof (passbook/cancelled cheque)', mandatory: true, hasExpiry: false, hasNumber: false, sort: 30 },
+                { id: 'DT-4', code: 'PHOTO', name: 'Photograph', mandatory: true, hasExpiry: false, hasNumber: false, sort: 40 },
+                { id: 'DT-5', code: 'DRIVING_LICENCE', name: 'Driving Licence', mandatory: false, hasExpiry: true, hasNumber: true, sort: 50 },
+                { id: 'DT-6', code: 'MARKSHEET_10', name: '10th Marksheet', mandatory: false, hasExpiry: false, hasNumber: false, sort: 60 },
+                { id: 'DT-7', code: 'MARKSHEET_12', name: '12th Marksheet', mandatory: false, hasExpiry: false, hasNumber: false, sort: 70 },
+                { id: 'DT-8', code: 'DEGREE', name: 'Degree Certificate', mandatory: false, hasExpiry: false, hasNumber: false, sort: 80 },
+                { id: 'DT-9', code: 'EXPERIENCE_LETTER', name: 'Experience Letter', mandatory: false, hasExpiry: false, hasNumber: false, sort: 90 },
+                { id: 'DT-10', code: 'MEDICAL_FITNESS', name: 'Medical Fitness Certificate', mandatory: false, hasExpiry: true, hasNumber: false, sort: 100 },
+                { id: 'DT-11', code: 'POLICE_VERIFICATION', name: 'Police Verification', mandatory: false, hasExpiry: false, hasNumber: false, sort: 110 },
+                { id: 'DT-12', code: 'OFFER_LETTER', name: 'Offer Letter', mandatory: false, hasExpiry: false, hasNumber: false, sort: 120 },
+                { id: 'DT-13', code: 'APPOINTMENT_LETTER', name: 'Appointment Letter', mandatory: false, hasExpiry: false, hasNumber: false, sort: 130 },
+                { id: 'DT-14', code: 'JOINING_LETTER_SIGNED', name: 'Signed Joining Letter', mandatory: false, hasExpiry: false, hasNumber: false, sort: 140 },
+                { id: 'DT-15', code: 'PF_FORM_11', name: 'PF Form 11', mandatory: false, hasExpiry: false, hasNumber: false, sort: 150 },
+                { id: 'DT-16', code: 'PF_FORM_2_NOMINATION', name: 'PF Form 2 (Nomination)', mandatory: false, hasExpiry: false, hasNumber: false, sort: 160 },
+                { id: 'DT-17', code: 'ESIC_FAMILY_DECLARATION', name: 'ESIC Family Declaration', mandatory: false, hasExpiry: false, hasNumber: false, sort: 170 }
+            ],
+            shifts: [
+                { id: 'SH-1', name: 'General', startTime: '09:00', endTime: '18:00' },
+                { id: 'SH-2', name: 'Morning', startTime: '06:00', endTime: '14:00' },
+                { id: 'SH-3', name: 'Night', startTime: '22:00', endTime: '06:00' }
+            ]
+        },
+        employeeTransfers: [],
+        attendanceModifications: [
+            { id: 'MOD-001', employee: 'Vikram Meena', empCode: 'DEMO-0005', date: '2026-07-20', originalStatus: 'Absent', newStatus: 'Present', modifiedBy: 'Admin', modifiedOn: '2026-07-21', reason: 'Forgot to punch — verified by supervisor' },
+            { id: 'MOD-002', employee: 'Sita Devi', empCode: 'DEMO-0012', date: '2026-07-18', originalStatus: 'Half Day', newStatus: 'Complete', modifiedBy: 'Admin', modifiedOn: '2026-07-19', reason: 'App crash, second punch not recorded' },
+            { id: 'MOD-003', employee: 'Bhanwar Lal', empCode: 'DEMO-0009', date: '2026-07-15', originalStatus: 'Present', newStatus: 'On Leave', modifiedBy: 'Admin', modifiedOn: '2026-07-16', reason: 'Leave applied retroactively' }
+        ],
+        dailyWorkReports: [
+            { id: 'DWR-001', date: '2026-07-24', project: 'NH-48 O&M', supervisor: 'Suresh Sharma', workers: 14, machinery: 6, progress: 72, weather: 'Clear', description: 'Continued base layer compaction on km 12-14. Bituminous macadam laying on km 10-11.', materials: 'Cement 50 bags, Aggregate 30 CUM, Bitumen 5 MT', issues: '', status: 'Submitted' },
+            { id: 'DWR-002', date: '2026-07-23', project: 'NH-48 O&M', supervisor: 'Suresh Sharma', workers: 12, machinery: 5, progress: 68, weather: 'Clear', description: 'WMM laying km 12-13. Drainage work at chainage 14+200.', materials: 'Cement 40 bags, Aggregate 25 CUM', issues: 'Delay due to material shortage', status: 'Approved' },
+            { id: 'DWR-003', date: '2026-07-22', project: 'NH-48 O&M', supervisor: 'Suresh Sharma', workers: 15, machinery: 7, progress: 65, weather: 'Rainy', description: 'Earth cutting and embankment work on km 15-16. Halted at 2 PM due to rain.', materials: 'Cement 20 bags', issues: 'Rain stoppage — 4 hours lost', status: 'Approved' },
+            { id: 'DWR-004', date: '2026-07-24', project: 'NH-11 Widening', supervisor: 'Rajendra Singh', workers: 8, machinery: 4, progress: 45, weather: 'Clear', description: 'Subgrade preparation km 5-6. Survey work for median.', materials: 'Steel 500 kg, Sand 10 CUM', issues: '', status: 'Draft' },
+            { id: 'DWR-005', date: '2026-07-23', project: 'NH-11 Widening', supervisor: 'Rajendra Singh', workers: 10, machinery: 5, progress: 42, weather: 'Clear', description: 'Earthwork cutting km 4-5. Box culvert casting at km 4+800.', materials: 'Cement 60 bags, Steel 800 kg', issues: '', status: 'Approved' }
+        ],
+        projectPnL: {
+            'NH-48 O&M': { budget: { labour: 4500000, materials: 6000000, machinery: 3000000, subcontractors: 2000000, overheads: 1000000 }, actual: { labour: 3850000, materials: 5200000, machinery: 2875000, subcontractors: 2200000, overheads: 950000 }, revenue: [
+                { id: 'REV-001', description: 'RA Bill #1 — Mobilisation Advance', amount: 9250000, date: '2026-04-15', status: 'Received' },
+                { id: 'REV-002', description: 'RA Bill #2 — Work done till May', amount: 4500000, date: '2026-06-10', status: 'Received' },
+                { id: 'REV-003', description: 'RA Bill #3 — Work done till Jul', amount: 3000000, date: '2026-07-20', status: 'Pending' }
+            ]},
+            'NH-11 Widening': { budget: { labour: 3000000, materials: 4000000, machinery: 2000000, subcontractors: 1500000, overheads: 800000 }, actual: { labour: 1200000, materials: 1800000, machinery: 950000, subcontractors: 600000, overheads: 350000 }, revenue: [
+                { id: 'REV-004', description: 'RA Bill #1 — Mobilisation', amount: 5000000, date: '2026-05-01', status: 'Received' },
+                { id: 'REV-005', description: 'RA Bill #2 — Work done till Jun', amount: 2500000, date: '2026-07-01', status: 'Pending' }
+            ]},
+            'SH-22 Maintenance': { budget: { labour: 1500000, materials: 2000000, machinery: 1000000, subcontractors: 500000, overheads: 500000 }, actual: { labour: 800000, materials: 1100000, machinery: 600000, subcontractors: 300000, overheads: 250000 }, revenue: [
+                { id: 'REV-006', description: 'RA Bill #1 — Mobilisation', amount: 2500000, date: '2026-06-01', status: 'Received' }
+            ]}
+        },
         users: [
             { id: 'USR-001', name: 'Admin', email: 'admin@buildcore.com', role: 'Super Admin', status: 'Active', lastLogin: '2026-07-24 09:15 AM' },
             { id: 'USR-002', name: 'Suresh Sharma', email: 'suresh@demo.com', role: 'Project Manager', status: 'Active', lastLogin: '2026-07-23 08:30 AM' },
@@ -205,6 +332,18 @@ function getDefaultData() {
             { machine: 'TOW-001', desc: 'PUC / Pollution Certificate', detail: 'PUC/RJ/2026/81703', due: 'expires 2026-07-31' },
             { machine: 'CAR-001', desc: 'PUC / Pollution Certificate', detail: 'PUC/RJ/2026/56165', due: 'expires 2026-07-31' },
             { machine: 'CAR-001', desc: 'Insurance Policy', detail: 'POL/2026/667145', due: 'expires 2026-08-10' }
+        ],
+        activityLog: [
+            { id: 'AL-001', timestamp: '2026-07-24T09:15:00', user: 'Admin', action: 'Approved leave', module: 'HR', target: 'LV-002', detail: 'Vikram Meena — Casual Leave (2 days)' },
+            { id: 'AL-002', timestamp: '2026-07-24T09:00:00', user: 'Admin', action: 'Ran payroll', module: 'Payroll', target: 'Jul 2026', detail: 'Demo Constructions Pvt Ltd' },
+            { id: 'AL-003', timestamp: '2026-07-23T16:30:00', user: 'Suresh Sharma', action: 'Submitted DWR', module: 'Projects', target: 'DWR-001', detail: 'NH-48 O&M — 24 Jul 2026' },
+            { id: 'AL-004', timestamp: '2026-07-23T15:15:00', user: 'Admin', action: 'Recorded fuel entry', module: 'Machinery', target: 'MF-001', detail: 'BHL-001 — 65L diesel' },
+            { id: 'AL-005', timestamp: '2026-07-23T14:00:00', user: 'Admin', action: 'Added logbook entry', module: 'Machinery', target: 'LB-001', detail: 'BHL-001 — 10 hrs' },
+            { id: 'AL-006', timestamp: '2026-07-22T17:00:00', user: 'Admin', action: 'Modified attendance', module: 'HR', target: 'MOD-001', detail: 'Vikram Meena — Absent → Present' },
+            { id: 'AL-007', timestamp: '2026-07-22T11:00:00', user: 'Admin', action: 'Recorded purchase', module: 'Inventory', target: 'PUR-001', detail: 'Cement OPC 53 Grade — 100 BAG' },
+            { id: 'AL-008', timestamp: '2026-07-21T15:00:00', user: 'Admin', action: 'Added document', module: 'Machinery', target: 'BTK-001', detail: 'Insurance — exp 15 Aug 2026' },
+            { id: 'AL-009', timestamp: '2026-07-20T10:00:00', user: 'Admin', action: 'Opened maintenance job', module: 'Machinery', target: 'MJ-001', detail: 'EXC-001 — Breakdown' },
+            { id: 'AL-010', timestamp: '2026-07-20T09:00:00', user: 'Admin', action: 'Verified compliance', module: 'Partners', target: 'CC-004', detail: 'Rajasthan Labour Services — Jun 2026' }
         ]
     };
 }

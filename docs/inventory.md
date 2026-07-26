@@ -218,6 +218,7 @@ Triggered by **"New transfer"** button.
 **Layout:**
 - Page title "Payments"
 - Top: **Vendor selector dropdown** — "Select vendor" (filters the payments list)
+- Filters: Vendor | From date | To date
 - Section heading: **"Recent payments"**
 
 **Recent Payments table columns:**
@@ -248,21 +249,79 @@ Triggered by **"New transfer"** button.
 
 ---
 
-### MASTERS (modal or page, triggered by "Masters" button on Stock)
+### MASTERS (modal triggered by "Masters" button on Stock page)
 
-**Manages the reference data used in dropdowns:**
+**Manages the reference data used in inventory dropdowns. Two tabs: Item Masters and Category Masters.**
+
+### MASTERS (modal triggered by "Masters" button on Stock page)
+
+**Manages the reference data used in inventory dropdowns. Two tabs: Item Masters and Category Masters.**
+
+**Tab buttons:** Item Masters | Category Masters — click to switch
+
+---
 
 **Item Masters tab:**
-- Table: Item name | Category | Unit | Description | Actions (Edit/Delete)
-- Add new item form
+
+| Column | Description |
+|---|---|
+| Code | Auto-generated item code (e.g. IM-001) |
+| Name | Item name (e.g. Cement OPC 53 Grade) |
+| Category | Category from Category Masters (e.g. CEMENT) |
+| Unit | BAG / CUM / KG / MT / NOS / LTR / SQM / RMT |
+| Description | Brief description |
+| Actions | Edit / Delete |
+
+**Pre-populated item masters:**
+| Name | Category | Unit | Description |
+|---|---|---|---|
+| Cement OPC 53 Grade | CEMENT | BAG | Ordinary Portland Cement 53 Grade |
+| Cement OPC 43 Grade | CEMENT | BAG | Ordinary Portland Cement 43 Grade |
+| Cement PPC | CEMENT | BAG | Portland Pozzolana Cement |
+| Aggregate 20mm | AGGREGATE | CUM | Coarse aggregate 20mm nominal size |
+| Aggregate 10mm | AGGREGATE | CUM | Coarse aggregate 10mm nominal size |
+| TMT Steel 12mm | STEEL | KG | TMT reinforcement bar 12mm Fe500D |
+| TMT Steel 16mm | STEEL | KG | TMT reinforcement bar 16mm Fe500D |
+| TMT Steel 8mm | STEEL | KG | TMT reinforcement bar 8mm Fe500D |
+| River Sand | SAND | CUM | Fine aggregate — river sand Zone II |
+| M-Sand | SAND | CUM | Manufactured sand |
+| Fly Ash Bricks | BRICKS | NOS | Standard fly ash bricks 230×110×75 |
+| Bitumen VG-30 | AGGREGATE | MT | Viscosity grade 30 bitumen |
+
+**Add Item modal:**
+| Field | Type | Notes |
+|---|---|---|
+| Item Name | Text | Required, e.g. "Cement PPC" |
+| Category | Dropdown | From Category Masters |
+| Unit | Dropdown | BAG / CUM / KG / MT / NOS / LTR / SQM / RMT |
+| Description | Text | Optional |
+
+**Behaviors:**
+- Item Masters populate the "Item" dropdown in Purchase, Issue, and Transfer modals
+- Full CRUD with edit and delete
+- Deleting an item master does not affect existing stock/purchase records
+
+---
 
 **Category Masters tab:**
-- Table: Category name | Actions
-- Pre-populated: CEMENT, AGGREGATE, STEEL, BRICKS, SAND, PAINT, ELECTRICAL, PLUMBING
 
-**Vendor Masters tab:**
-- Table: Vendor name | Phone | GST number | Address | Actions
-- Pre-populated with the 5 mock vendors listed above
+| Column | Description |
+|---|---|
+| # | Row number |
+| Category | Category name (uppercase) |
+| Items | Count of Item Masters in this category |
+| Actions | Delete |
+
+**Pre-populated:** CEMENT, AGGREGATE, STEEL, BRICKS, SAND, PAINT, ELECTRICAL, PLUMBING
+
+**Add Category modal:**
+- Single field: Category Name (auto-uppercased)
+- Duplicate check — cannot add existing category name
+
+**Behaviors:**
+- Categories populate the Category dropdown in Item Masters
+- Categories also populate the category filter on the Stock page
+- Deleting a category does not remove items already in that category
 
 ---
 
@@ -271,6 +330,8 @@ Triggered by **"New transfer"** button.
 - Every purchase recorded here also appears in the **Project → Bills** section for that project
 - Every payment recorded here links back to purchases via the Allocated bills count
 - Stock In stock values update immediately across all views when purchases, issues, or transfers are saved
+- **Item Masters** populate the Item dropdown in Purchase, Issue, and Transfer modals
+- **Category Masters** populate category filter on Stock page and Category dropdown in Item Masters
 - All data persists in localStorage
 - Toast notifications on every create/edit/delete action
 - Empty state shown when no records match the current filter

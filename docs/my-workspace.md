@@ -8,7 +8,8 @@
 My Workspace
   ├── My Punch
   ├── My Leave
-  └── My Salary Summary
+  ├── My Salary Summary
+  └── Face Enrolment
 ```
 
 ---
@@ -175,11 +176,62 @@ My Workspace
 
 ---
 
+### FACE ENROLMENT (`/my/face-enrol`)
+
+**Purpose:**
+One-time biometric face enrolment performed by the employee. Required before face-based punch-in is enabled. Once enrolled, the employee does not need to revisit this page.
+
+**Layout:**
+- Page title "Face Enrolment"
+- Employee name displayed in header (e.g. "Face enrolment — Ramesh Kumar")
+- Instructions: "Capture 3–5 photos, varying the angle and lighting slightly between them."
+- Enrolment status indicator
+
+**Enrolment status:**
+| State | Display |
+|---|---|
+| Not enrolled | 🔒 "Not enrolled yet." (gray) |
+| Enrolled | ✅ "Enrolled on DD MMM YYYY" (green) |
+
+**PHOTOS section:**
+- Counter: "PHOTOS (X/5)"
+- Grid of captured photo thumbnails (max 5)
+- **"Capture"** button with camera icon — opens device camera (mocked)
+- Each captured photo shows a small preview thumbnail
+- Minimum 3 photos required, maximum 5
+
+**BIOMETRIC CONSENT section:**
+| Field | Type |
+|---|---|
+| Consent Method | Dropdown: "Signed paper form (scanned)" / "Digital consent (in-app)" / "Verbal (witnessed)" |
+| Consent Acknowledgement | Checkbox: "This worker was told what their face data is used for and has consented (v1-YYYY-MM)" |
+
+- Note text: "Written consent is required for biometric data and is recorded against this enrolment. It can be withdrawn later."
+
+**"Enrol" button (primary):**
+- Disabled until: at least 3 photos captured AND consent checkbox is checked
+- On click: toast "Face enrolled successfully", status changes to Enrolled, button changes to "Re-enrol" (secondary)
+
+**Re-enrol behavior:**
+- If already enrolled, shows green status with date
+- "Re-enrol" button clears existing photos and resets the flow
+- Confirmation dialog: "This will replace your existing face data. Continue?"
+
+**Behaviors:**
+- This is a one-time setup step per employee
+- Face enrolment is required before face-based punch-in works
+- Consent must be recorded before enrolment is accepted
+- Admin can view enrolment status in Employee detail → Documents tab
+- Data persists in localStorage (mocked — no actual biometric processing)
+
+---
+
 ### CROSS-MODULE BEHAVIORS
 
 - My Punch data feeds into the admin Attendance module
 - My Leave applications appear in admin Leave Summary for approval
 - My Salary Summary reads from Payroll Runs data for the logged-in employee
 - Punch geolocation data appears in admin Attendance → Punch Exceptions
+- Face Enrolment status gates face-based punch-in (employee cannot face-punch without enrolling)
 - All data persists in localStorage
-- Toast notifications on punch, leave apply, and leave cancel actions
+- Toast notifications on punch, leave apply, leave cancel, and face enrolment actions

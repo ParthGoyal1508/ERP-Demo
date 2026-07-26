@@ -1,6 +1,7 @@
 function initAuth(){document.getElementById('login-form').addEventListener('submit',function(e){e.preventDefault();const em=document.getElementById('login-email').value,pw=document.getElementById('login-password').value;if(em==='admin@buildcore.com'&&pw==='demo123'){localStorage.setItem('buildcore_auth','true');showApp();toast('Welcome back, Admin!','success');}else{toast('Invalid credentials','error');}});}
 function togglePassword(){const i=document.getElementById('login-password'),ic=document.querySelector('.toggle-password i');if(i.type==='password'){i.type='text';ic.className='fas fa-eye-slash';}else{i.type='password';ic.className='fas fa-eye';}}
-function showApp(){document.getElementById('login-page').classList.add('hidden');document.getElementById('app-shell').classList.remove('hidden');navigateTo(window.location.hash||'#/dashboard');}
+function showApp(){document.getElementById('login-page').classList.add('hidden');document.getElementById('app-shell').classList.remove('hidden');updateNotifBadge();navigateTo(window.location.hash||'#/dashboard');}
+function updateNotifBadge(){try{const n=getNotifications().length;const b=document.querySelector('.header-icon .badge');if(b)b.textContent=n;}catch(e){}}
 function logout(){localStorage.removeItem('buildcore_auth');document.getElementById('login-page').classList.remove('hidden');document.getElementById('app-shell').classList.add('hidden');toast('Logged out','info');}
 function navigateTo(hash){window.location.hash=hash;}
 function handleRoute(){
@@ -12,9 +13,13 @@ function handleRoute(){
         case '/dashboard':renderDashboard(c);break;
         case '/group':renderGroupDashboard(c);break;
         case '/reports':renderReports(c);break;
+        case '/notifications':renderNotifications(c);break;
+        case '/activity-log':renderActivityLog(c);break;
+        case '/site-dashboard':renderSiteDashboard(c);break;
         case '/my/punch':renderMyPunch(c);break;
         case '/my/leave':renderMyLeave(c);break;
         case '/my/salary':renderMySalary(c);break;
+        case '/my/face-enrol':renderFaceEnrolment(c);break;
         case '/hr/employees':renderEmployees(c);break;
         case '/hr/attendance':renderAttendance(c);break;
         case '/hr/leave':renderLeave(c);break;
@@ -29,11 +34,16 @@ function handleRoute(){
         case '/machinery/categories':renderEquipmentCategories(c);break;
         case '/machinery/doc-types':renderEquipmentDocTypes(c);break;
         case '/machinery/rates':renderHireRates(c);break;
+        case '/machinery/utilization':renderUtilizationReport(c);break;
         case '/projects/portfolio':renderPortfolio(c);break;
+        case '/projects/dwr':renderDWR(c);break;
+        case '/projects/pnl':renderProjectPnL(c);break;
         case '/projects/clients':renderClients(c);break;
         case '/projects/sites':renderSites(c);break;
         case '/vendors':renderVendors(c);break;
+        case '/vendors/categories':renderVendorCategories(c);break;
         case '/contractors':renderContractors(c);break;
+        case '/contractors/compliance':renderContractorCompliance(c);break;
         case '/contractors/rag':renderRAGMatrix(c);break;
         case '/bocw':renderBOCW(c);break;
         case '/inventory/stock':renderStock(c);break;
@@ -50,7 +60,7 @@ function handleRoute(){
 function toggleSidebar(){const s=document.getElementById('sidebar');s.classList.toggle('collapsed');s.classList.toggle('open');}
 function initSidebar(){document.querySelectorAll('.nav-group-title').forEach(t=>{t.addEventListener('click',function(){this.parentElement.classList.toggle('open');});});document.querySelectorAll('.nav-group').forEach(g=>g.classList.add('open'));}
 function toggleUserMenu(){document.getElementById('user-dropdown').classList.toggle('hidden');}
-function showNotifications(){toast('No new notifications','info');}
+function showNotifications(){navigateTo('#/notifications');}
 function toast(msg,type='success'){const c=document.getElementById('toast-container'),el=document.createElement('div');el.className=`toast toast-${type}`;el.textContent=msg;c.appendChild(el);setTimeout(()=>el.remove(),3000);}
 function openModal(title,body,footer=''){document.getElementById('modal-title').textContent=title;document.getElementById('modal-body').innerHTML=body;document.getElementById('modal-footer').innerHTML=footer;document.getElementById('modal-overlay').classList.remove('hidden');}
 function closeModal(e){if(e&&e.target!==document.getElementById('modal-overlay'))return;document.getElementById('modal-overlay').classList.add('hidden');}

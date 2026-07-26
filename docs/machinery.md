@@ -395,6 +395,55 @@ Machinery
 
 ---
 
+### EQUIPMENT DOCUMENT TRACKING (`Asset Register → Documents column`)
+
+**Purpose:**
+Per-machine document management for RC, Insurance, PUC, Fitness with expiry dates and auto-alerts. Construction companies face heavy fines for expired vehicle documents.
+
+**Documents column in Asset Register:**
+- Each asset row shows a clickable badge:
+  - 🟢 Green badge `"N valid"` — all documents have valid expiry or no expiry
+  - 🟡 Yellow badge `"N expiring"` — at least one document expires within 30 days
+  - 🔴 Red badge `"N expired"` — at least one document is past expiry date
+  - Gray `—` — no documents attached yet
+
+**Clicking the badge** opens a modal showing all documents for that machine:
+
+| Column | Description |
+|---|---|
+| Document | Document type name (from Equipment Doc Types) |
+| Number | Document/policy number |
+| Expiry | Expiry date |
+| Status | Valid / Expiring Soon / EXPIRED / No Expiry |
+| Actions | Edit / Delete |
+
+**Actions:**
+- **Add Document** button → modal with: Document Type (dropdown from Equipment Doc Types), Document Number, Expiry Date
+- **Edit** → pre-filled modal with same fields
+- **Delete** → confirmation dialog
+
+**Expiry Alerts Banner:**
+Below the Asset Register table, a red alert box appears if any documents are expired or expiring within 30 days:
+
+| Column | Description |
+|---|---|
+| Machine | Machine ID + name |
+| Document | Document type name |
+| Expiry | Expiry date |
+| Status | EXPIRED (red) / Expiring Soon (yellow) |
+
+**Pre-populated mock data:**
+- BTK-001 (Bitumen Tanker): RC, Insurance (exp 15 Aug 2026), PUC (exp 01 Aug 2026), Fitness (exp 31 Mar 2027)
+- CAR-001 (Innova Crysta): RC, Insurance (exp 30 Sep 2026), PUC (exp 30 Jul 2026), Fitness (exp 31 Dec 2026)
+
+**Behaviors:**
+- Documents stored per-asset as `documents[]` array with `{ type, number, expiry }`
+- 30-day lookahead for "Expiring Soon" threshold
+- Expired/expiring documents contribute to the Flags count in Asset Register
+- Equipment Doc Types master defines which document types are available
+
+---
+
 ### CROSS-MODULE BEHAVIORS
 
 - Asset Register readings update from Logbook entries
@@ -402,6 +451,7 @@ Machinery
 - Maintenance due services calculated from Asset Register readings vs service intervals
 - Hire Bills auto-calculated from Logbook hours × Hire Rates
 - Equipment Doc Types with expiry dates generate Dashboard → Alerts & Reminders
+- **Equipment Document Tracking** — per-machine RC/Insurance/PUC/Fitness with expiry alerts in Asset Register
 - TDS on Hire Bills uses vendor TDS % from Partners → Vendors
 - All data persists in localStorage
 - Toast notifications on every create / edit / delete / verify / pay action

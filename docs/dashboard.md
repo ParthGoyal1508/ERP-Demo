@@ -8,6 +8,9 @@
 General
   ├── Dashboard
   ├── Group Dashboard
+  ├── Site Dashboard
+  ├── Notifications
+  ├── Activity Log
   └── Reports
 ```
 
@@ -172,9 +175,192 @@ Each company card shows:
 
 ---
 
+### NOTIFICATIONS CENTER (`/notifications`)
+
+**Layout:**
+- Page title "Notifications"
+- Notifications list sorted newest-first
+- Auto-generated from live data — no manual creation
+
+**Notification sources (auto-generated):**
+
+| Category | Icon | Color | Condition | Example |
+|---|---|---|---|---|
+| Document Expiry | fa-file-circle-exclamation | Red | Equipment document expires within 30 days or already expired | "CAR-001 — PUC expires on 30 Jul 2026" |
+| Pending Leave Approvals | fa-calendar-clock | Yellow | Leave applications with status "Pending" | "Vikram Meena applied for 2 days Casual Leave — awaiting approval" |
+| Maintenance Due | fa-wrench | Orange | Open maintenance jobs or due services from alerts | "EXC-001 — Breakdown job open since 20 Jul 2026" |
+| Fuel Variance | fa-gas-pump | Red | Fuel consumption exceeds category benchmark by >15% | "BHL-001 — Fuel consumption 13% above benchmark" |
+| Contractor Compliance | fa-shield-halved | Red | Missing compliance submissions for current/previous month | "Shree Balaji Labour Co — Jun 2026 compliance missing" |
+| Payroll Pending | fa-money-check | Blue | Months with no payroll run | "Jul 2026 payroll not yet processed" |
+
+**Notification row layout:**
+- Icon (colored by category)
+- Title — bold, one-line summary
+- Subtitle — details + timestamp
+- Action link — navigates to relevant page (e.g. "View" → /hr/leave, /machinery, etc.)
+
+**Bell badge (header):**
+- The bell icon in the app header shows a red badge with the total count of active notifications
+- Badge count auto-derives from the same data sources
+
+**Behaviors:**
+- Notifications are computed on-the-fly from live data, not stored separately
+- Clicking a notification's action link navigates to the relevant page
+- No manual dismiss — notifications disappear when the underlying condition is resolved
+
+---
+
+### ACTIVITY LOG (`/activity-log`)
+
+**Layout:**
+- Page title "Activity Log"
+- Chronological feed of all user actions, newest first
+- Filters: All modules | Today / 7 days / 30 days
+
+**Activity log entry format:**
+- Avatar/Icon — action type icon
+- **User** performed **action** on **target**
+- Timestamp (relative, e.g. "2 hours ago" / absolute date)
+
+**Activity types tracked:**
+
+| Module | Actions Logged |
+|---|---|
+| HR | Employee added/edited, Attendance modified, Leave approved/rejected |
+| Payroll | Payroll run generated, Salary slip viewed |
+| Machinery | Asset added, Logbook entry, Fuel entry, Maintenance job opened/closed, Document added |
+| Projects | Project added/edited, DWR submitted/approved, Client/Site added |
+| Inventory | Purchase recorded, Issue recorded, Transfer recorded, Payment recorded, Item Master added |
+| Partners | Vendor added/edited, Contractor added, Compliance recorded/verified |
+| Settings | Company/User/Role changes |
+
+**Pre-populated mock data (10 entries):**
+| Time | Entry |
+|---|---|
+| 24 Jul, 9:15 AM | Admin approved leave LV-002 (Vikram Meena — Casual Leave) |
+| 24 Jul, 9:00 AM | Admin ran payroll for Jul 2026 |
+| 23 Jul, 4:30 PM | Suresh Sharma submitted DWR DWR-001 for NH-48 O&M |
+| 23 Jul, 3:15 PM | Admin recorded fuel entry MF-001 — BHL-001, 65L |
+| 23 Jul, 2:00 PM | Admin added logbook entry LB-001 — BHL-001 |
+| 22 Jul, 5:00 PM | Admin modified attendance for Vikram Meena (Absent → Present) |
+| 22 Jul, 11:00 AM | Admin recorded purchase PUR-001 — Cement 100 BAG |
+| 21 Jul, 3:00 PM | Admin added document (Insurance) to BTK-001 |
+| 20 Jul, 10:00 AM | Admin opened maintenance job MJ-001 — EXC-001 Breakdown |
+| 20 Jul, 9:00 AM | Admin verified compliance for Rajasthan Labour Services — Jun 2026 |
+
+**Behaviors:**
+- Activity log entries stored in `AppData.activityLog[]`
+- Every create/update/delete action across the app pushes a new log entry
+- Log entries have: `{ id, timestamp, user, action, module, target, detail }`
+- Filterable by module and time range
+- Max 200 entries retained (oldest trimmed)
+
+---
+
+### SITE DASHBOARD (`/site-dashboard`)
+
+**Layout:**
+- Page title "Site Dashboard"
+- Top: **Site selector dropdown** — lists all project sites
+- Below: Site-specific KPI cards + data sections
+
+**Site selector:**
+- Dropdown populated from projects list (NH-48 O&M, NH-11 Widening, SH-22 Maintenance)
+- Changing site refreshes all sections below
+
+**KPI Cards (4-column grid):**
+| Card | Description | Data Source |
+|---|---|---|
+| Workers Today | Count of employees with attendance at this site | Attendance filtered by project |
+| Machinery Deployed | Count of assets assigned to this site | Assets filtered by site |
+| Fuel Consumed (Month) | Total fuel litres this month at this site | Machinery Fuel filtered by site |
+| Material Stock Value | Total stock value at this site | Stock filtered by project |
+
+**Section 1: Today's Attendance (table)**
+- Filtered to selected site/project
+- Columns: Employee, Department, Status
+
+**Section 2: Machinery at Site (table)**
+- Assets where `site` matches selected project
+- Columns: ID, Machine, Category, Reading, Utilization, Document Status
+
+**Section 3: Fuel Consumption (recent entries)**
+- Last 10 fuel entries for this site
+- Columns: Date, Machine, Quantity (L), Amount
+
+**Section 4: Material Stock (table)**
+- Stock items where `project` matches
+- Columns: Item, Category, In Stock, Stock Value
+
+**Section 5: Recent Expenses**
+- Purchases for this project (last 5)
+- Columns: Date, Item, Vendor, Amount
+
+**Behaviors:**
+- All sections filter by the selected site/project
+- KPI values recompute on site change
+- Site Dashboard gives Project Managers a single-view of their site's operations
+- Default selection: first project in list
+
+---
+
+### EQUIPMENT UTILIZATION REPORT (`/machinery/utilization`)
+
+**Layout:**
+- Page title "Equipment Utilization Report"
+- Top: Month selector (dropdown) — defaults to current month
+- Horizontal stacked bar chart (CSS-only) showing utilization bands
+- Below: Detailed table of all machines with utilization %
+
+**Utilization bands (summary bar):**
+| Band | Range | Color | Meaning |
+|---|---|---|---|
+| Underutilized | <60% | Red | Machines sitting idle — consider releasing hired ones |
+| Normal | 60–80% | Yellow | Healthy usage range |
+| Well Utilized | 80–95% | Green | Optimal |
+| Overutilized | >95% | Orange | Risk of breakdown — consider hiring more |
+
+**Summary cards (4-column):**
+| Card | Value | Description |
+|---|---|---|
+| Total Machines | Count | All assets |
+| Underutilized (<60%) | Count | Consider releasing |
+| Well Utilized (80–95%) | Count | Optimal range |
+| Overutilized (>95%) | Count | Need attention |
+
+**Utilization bar visualization:**
+- Full-width horizontal bar divided into colored segments
+- Each segment proportional to count of machines in that band
+- Labels inside segments showing count
+
+**Detailed table:**
+| Column | Description |
+|---|---|
+| Machine | ID + Name |
+| Category | Equipment category |
+| Site | Assigned site |
+| Ownership | Owned / Hired |
+| Utilization % | Percentage with progress bar |
+| Band | Underutilized / Normal / Well Utilized / Overutilized |
+| Recommendation | "Release if hired" / "OK" / "Optimal" / "Hire backup" |
+
+**Sorting:** Sorted by utilization % ascending (worst first)
+
+**Behaviors:**
+- Utilization data from Asset Register `utilization` field
+- Provides actionable insights: which machines to release vs hire more
+- Hired + Underutilized machines flagged prominently (money being wasted)
+- Month selector is placeholder (data is current snapshot)
+
+---
+
 ### CROSS-MODULE BEHAVIORS
 
 - Dashboard alerts derive from Machinery service schedules and document expiry dates
+- **Notifications Center** auto-generates alerts from document expiry, pending leaves, maintenance, fuel variance, compliance gaps
+- **Activity Log** records all user actions across all modules
+- **Site Dashboard** filters all modules by a single site for PM view
+- **Equipment Utilization Report** helps decide hire vs release decisions
 - Active Projects count derives from Projects Portfolio data
 - Employees on Muster derives from today's Attendance data
 - Group Dashboard metrics are aggregated from all companies' HR, Payroll, and Loan data

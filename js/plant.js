@@ -1,3 +1,19 @@
+function getDocExpiryBadge(asset) {
+    const docs = asset.documents || [];
+    if (!docs.length) return '<span style="font-size:11px;color:#9ca3af">—</span>';
+    const today = new Date().toISOString().split('T')[0];
+    const warn30 = new Date(Date.now() + 30*86400000).toISOString().split('T')[0];
+    let expired = 0, expiring = 0, ok = 0;
+    docs.forEach(d => {
+        if (!d.expiry) { ok++; return; }
+        if (d.expiry < today) expired++;
+        else if (d.expiry <= warn30) expiring++;
+        else ok++;
+    });
+    if (expired) return `<span class="badge-status badge-red" style="cursor:pointer" onclick="viewAssetDocs('${asset.id}')">${expired} expired</span>`;
+    if (expiring) return `<span class="badge-status badge-yellow" style="cursor:pointer" onclick="viewAssetDocs('${asset.id}')">${expiring} expiring</span>`;
+    return `<span class="badge-status badge-green" style="cursor:pointer" onclick="viewAssetDocs('${asset.id}')">${docs.length} valid</span>`;
+}
 function renderAssetRegister(container){
     const d=AppData;
     container.innerHTML=`
@@ -7,9 +23,28 @@ function renderAssetRegister(container){
         <select id="filter-asset-status" onchange="filterAssets('')"><option value="">All Status</option><option value="Active">Active</option><option value="Under Maintenance">Under Maintenance</option><option value="Inactive">Inactive</option></select>
         <select id="filter-asset-class" onchange="filterAssets('')"><option value="">All Classes</option><option value="Plant">Plant</option><option value="Equipment">Equipment</option><option value="Vehicle">Vehicle</option></select>
     </div>
-    <div class="table-container"><table id="assets-table"><thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Category</th><th>Ownership</th><th>Status</th><th>Site</th><th>Reading</th><th>Utilization</th><th>Flags</th></tr></thead><tbody>
-    ${d.assets.map(a=>`<tr><td>${a.id}</td><td>${a.name}</td><td>${a.class}</td><td>${a.category}</td><td>${a.ownership}</td><td>${getStatusBadge(a.status)}</td><td>${a.site||'-'}</td><td>${a.reading||'-'}</td><td><div class="progress-bar" style="width:80px;display:inline-block"><div class="progress-bar-fill ${a.utilization>80?'progress-green':a.utilization>60?'progress-yellow':'progress-orange'}" style="width:${a.utilization}%"></div></div> <span style="font-size:11px">${a.utilization}%</span></td><td>${a.flags?`<span class="badge-status badge-red">${a.flags}</span>`:'-'}</td></tr>`).join('')}
-    </tbody></table></div>`;
+    <div class="table-container"><table id="assets-table"><thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Category</th><th>Ownership</th><th>Status</th><th>Site</th><th>Reading</th><th>Utilization</th><th>Documents</th><th>Flags</th></tr></thead><tbody>
+    ${d.assets.map(a=>renderAssetRow(a)).join('')}
+    </tbody></table></div>
+    ${getExpiryAlertsBanner(d.assets)}`;
+}
+function renderAssetRow(a) {
+    return `<tr><td>${a.id}</td><td>${a.name}</td><td>${a.class}</td><td>${a.category}</td><td>${a.ownership}</td><td>${getStatusBadge(a.status)}</td><td>${a.site||'-'}</td><td>${a.reading||'-'}</td><td><div class="progress-bar" style="width:80px;display:inline-block"><div class="progress-bar-fill ${a.utilization>80?'progress-green':a.utilization>60?'progress-yellow':'progress-orange'}" style="width:${a.utilization}%"></div></div> <span style="font-size:11px">${a.utilization}%</span></td><td>${getDocExpiryBadge(a)}</td><td>${a.flags?`<span class="badge-status badge-red">${a.flags}</span>`:'-'}</td></tr>`;
+}
+function getExpiryAlertsBanner(assets) {
+    const today = new Date().toISOString().split('T')[0];
+    const warn30 = new Date(Date.now() + 30*86400000).toISOString().split('T')[0];
+    let alerts = [];
+    assets.forEach(a => {
+        (a.documents || []).forEach(d => {
+            if (!d.expiry) return;
+            const dtName = (AppData.equipmentDocTypes.find(t => t.code === d.type) || {}).name || d.type;
+            if (d.expiry < today) alerts.push({ machine: a.id + ' ' + a.name, doc: dtName, expiry: d.expiry, level: 'expired' });
+            else if (d.expiry <= warn30) alerts.push({ machine: a.id + ' ' + a.name, doc: dtName, expiry: d.expiry, level: 'expiring' });
+        });
+    });
+    if (!alerts.length) return '';
+    return `<div style="margin-top:16px;padding:12px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px"><h4 style="color:#dc2626;margin-bottom:8px"><i class="fas fa-exclamation-triangle"></i> Document Expiry Alerts</h4><table style="font-size:13px"><thead><tr><th>Machine</th><th>Document</th><th>Expiry</th><th>Status</th></tr></thead><tbody>${alerts.map(a=>`<tr><td>${a.machine}</td><td>${a.doc}</td><td>${a.expiry}</td><td>${a.level==='expired'?'<span class="badge-status badge-red">EXPIRED</span>':'<span class="badge-status badge-yellow">Expiring Soon</span>'}</td></tr>`).join('')}</tbody></table></div>`;
 }
 function filterAssets(q){
     const s=document.getElementById('filter-asset-status').value,c=document.getElementById('filter-asset-class').value;
@@ -17,7 +52,79 @@ function filterAssets(q){
     if(s)rows=rows.filter(a=>a.status===s);
     if(c)rows=rows.filter(a=>a.class===c);
     if(q)rows=rows.filter(a=>(a.id+a.name+a.category).toLowerCase().includes(q.toLowerCase()));
-    document.querySelector('#assets-table tbody').innerHTML=rows.map(a=>`<tr><td>${a.id}</td><td>${a.name}</td><td>${a.class}</td><td>${a.category}</td><td>${a.ownership}</td><td>${getStatusBadge(a.status)}</td><td>${a.site||'-'}</td><td>${a.reading||'-'}</td><td><div class="progress-bar" style="width:80px;display:inline-block"><div class="progress-bar-fill ${a.utilization>80?'progress-green':a.utilization>60?'progress-yellow':'progress-orange'}" style="width:${a.utilization}%"></div></div> <span style="font-size:11px">${a.utilization}%</span></td><td>${a.flags?`<span class="badge-status badge-red">${a.flags}</span>`:'-'}</td></tr>`).join('');
+    document.querySelector('#assets-table tbody').innerHTML=rows.map(a=>renderAssetRow(a)).join('');
+}
+
+function viewAssetDocs(assetId) {
+    const a = AppData.assets.find(x => x.id === assetId);
+    if (!a) return;
+    const docs = a.documents || [];
+    const today = new Date().toISOString().split('T')[0];
+    const warn30 = new Date(Date.now() + 30*86400000).toISOString().split('T')[0];
+    const body = `
+        <p style="margin-bottom:12px;color:#6b7280">${a.id} — ${a.name}</p>
+        <table><thead><tr><th>Document</th><th>Number</th><th>Expiry</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+        ${docs.length ? docs.map((d, i) => {
+            const dtName = (AppData.equipmentDocTypes.find(t => t.code === d.type) || {}).name || d.type;
+            let statusBadge = '<span class="badge-status badge-green">Valid</span>';
+            if (d.expiry && d.expiry < today) statusBadge = '<span class="badge-status badge-red">EXPIRED</span>';
+            else if (d.expiry && d.expiry <= warn30) statusBadge = '<span class="badge-status badge-yellow">Expiring Soon</span>';
+            else if (!d.expiry) statusBadge = '<span class="badge-status badge-gray">No Expiry</span>';
+            return `<tr><td>${dtName}</td><td>${d.number || '-'}</td><td>${d.expiry || '-'}</td><td>${statusBadge}</td><td><button class="btn btn-sm" onclick="editAssetDoc('${assetId}',${i})"><i class="fas fa-edit"></i></button> <button class="btn btn-sm btn-danger" onclick="removeAssetDoc('${assetId}',${i})"><i class="fas fa-trash"></i></button></td></tr>`;
+        }).join('') : '<tr><td colspan="5" style="text-align:center;color:#9ca3af">No documents attached</td></tr>'}
+        </tbody></table>
+        <div style="margin-top:12px"><button class="btn btn-primary btn-sm" onclick="addAssetDoc('${assetId}')"><i class="fas fa-plus"></i> Add Document</button></div>`;
+    openModal('Equipment Documents', body);
+}
+function addAssetDoc(assetId) {
+    closeModal({target:document.getElementById('modal-overlay')});
+    const dtOpts = AppData.equipmentDocTypes.map(dt => `<option value="${dt.code}">${dt.name} (${dt.code})</option>`).join('');
+    openModal('Add Document — ' + assetId, `<form id="asset-doc-form"><div class="form-grid">
+        <div class="form-group"><label>Document Type</label><select name="type" required>${dtOpts}</select></div>
+        <div class="form-group"><label>Document Number</label><input name="number"></div>
+        <div class="form-group"><label>Expiry Date</label><input type="date" name="expiry"></div>
+    </div></form>`,
+    `<button class="btn" onclick="closeModal({target:document.getElementById('modal-overlay')})">Cancel</button> <button class="btn btn-primary" onclick="saveAssetDoc('${assetId}')">Save</button>`);
+}
+function saveAssetDoc(assetId) {
+    const a = AppData.assets.find(x => x.id === assetId);
+    if (!a) return;
+    if (!a.documents) a.documents = [];
+    const fd = new FormData(document.getElementById('asset-doc-form'));
+    a.documents.push({ type: fd.get('type'), number: fd.get('number'), expiry: fd.get('expiry') });
+    saveData(AppData); closeModal({target:document.getElementById('modal-overlay')}); toast('Document added');
+    viewAssetDocs(assetId);
+}
+function editAssetDoc(assetId, idx) {
+    closeModal({target:document.getElementById('modal-overlay')});
+    const a = AppData.assets.find(x => x.id === assetId);
+    if (!a || !a.documents || !a.documents[idx]) return;
+    const d = a.documents[idx];
+    const dtOpts = AppData.equipmentDocTypes.map(dt => `<option value="${dt.code}" ${dt.code===d.type?'selected':''}>${dt.name} (${dt.code})</option>`).join('');
+    openModal('Edit Document — ' + assetId, `<form id="asset-doc-form"><div class="form-grid">
+        <div class="form-group"><label>Document Type</label><select name="type" required>${dtOpts}</select></div>
+        <div class="form-group"><label>Document Number</label><input name="number" value="${d.number||''}"></div>
+        <div class="form-group"><label>Expiry Date</label><input type="date" name="expiry" value="${d.expiry||''}"></div>
+    </div></form>`,
+    `<button class="btn" onclick="closeModal({target:document.getElementById('modal-overlay')})">Cancel</button> <button class="btn btn-primary" onclick="updateAssetDoc('${assetId}',${idx})">Update</button>`);
+}
+function updateAssetDoc(assetId, idx) {
+    const a = AppData.assets.find(x => x.id === assetId);
+    if (!a || !a.documents || !a.documents[idx]) return;
+    const fd = new FormData(document.getElementById('asset-doc-form'));
+    a.documents[idx] = { type: fd.get('type'), number: fd.get('number'), expiry: fd.get('expiry') };
+    saveData(AppData); closeModal({target:document.getElementById('modal-overlay')}); toast('Document updated');
+    viewAssetDocs(assetId);
+}
+function removeAssetDoc(assetId, idx) {
+    showConfirm('Remove Document', 'Delete this document record?', function(r) {
+        if (r) {
+            const a = AppData.assets.find(x => x.id === assetId);
+            if (a && a.documents) { a.documents.splice(idx, 1); saveData(AppData); toast('Document removed'); }
+            closeModal({target:document.getElementById('modal-overlay')});
+            viewAssetDocs(assetId);
+        }
+    });
 }
 function addAsset(){
     const cats=AppData.equipmentCategories.map(c=>`<option value="${c.category}">${c.category}</option>`).join('');
@@ -27,11 +134,27 @@ function saveAsset(){const f=document.getElementById('asset-form'),fd=new FormDa
 
 function renderLogbook(container){
     const d=AppData;
+    const mOpts=d.assets.map(a=>`<option value="${a.id}">${a.id} ${a.name}</option>`).join('');
     container.innerHTML=`
     <div class="page-header"><h1>Logbook</h1><button class="btn btn-primary" onclick="addLogEntry()"><i class="fas fa-plus"></i> Add Entry</button></div>
-    <div class="table-container"><table><thead><tr><th>Date</th><th>Machine</th><th>Site</th><th>Operator</th><th>Opening</th><th>Closing</th><th>Total Hrs</th><th>Fuel (L)</th><th>Remarks</th></tr></thead><tbody>
+    <div style="margin-bottom:12px;display:flex;gap:10px;flex-wrap:wrap">
+        <input type="date" id="log-date-filter" onchange="filterLogbook()">
+        <select id="log-machine-filter" onchange="filterLogbook()"><option value="">All Machines</option>${mOpts}</select>
+        <select id="log-site-filter" onchange="filterLogbook()"><option value="">All Sites</option>${d.projects.map(p=>`<option value="${p.name}">${p.name}</option>`).join('')}</select>
+    </div>
+    <div class="table-container"><table><thead><tr><th>Date</th><th>Machine</th><th>Site</th><th>Operator</th><th>Opening</th><th>Closing</th><th>Total Hrs</th><th>Fuel (L)</th><th>Remarks</th></tr></thead><tbody id="logbook-tbody">
     ${d.logbook.map(l=>`<tr><td>${l.date}</td><td>${l.machine}</td><td>${l.site}</td><td>${l.operator||'-'}</td><td>${l.opening}</td><td>${l.closing}</td><td>${l.totalHrs}</td><td>${l.fuel}</td><td>${l.remarks||'-'}</td></tr>`).join('')}
     </tbody></table></div>`;
+}
+function filterLogbook(){
+    const dt=document.getElementById('log-date-filter').value;
+    const machine=document.getElementById('log-machine-filter').value;
+    const site=document.getElementById('log-site-filter').value;
+    let rows=AppData.logbook;
+    if(dt)rows=rows.filter(l=>l.date===dt);
+    if(machine)rows=rows.filter(l=>l.machineId===machine);
+    if(site)rows=rows.filter(l=>l.site===site);
+    document.getElementById('logbook-tbody').innerHTML=rows.map(l=>`<tr><td>${l.date}</td><td>${l.machine}</td><td>${l.site}</td><td>${l.operator||'-'}</td><td>${l.opening}</td><td>${l.closing}</td><td>${l.totalHrs}</td><td>${l.fuel}</td><td>${l.remarks||'-'}</td></tr>`).join('');
 }
 function addLogEntry(){
     const mOpts=AppData.assets.map(a=>`<option value="${a.id}">${a.id} ${a.name}</option>`).join('');
@@ -43,10 +166,28 @@ function renderMachineryFuel(container){
     const d=AppData,totalQty=d.machineryFuel.reduce((s,f)=>s+f.quantity,0),totalAmt=d.machineryFuel.reduce((s,f)=>s+f.amount,0);
     container.innerHTML=`
     <div class="page-header"><h1>Fuel Entries</h1><button class="btn btn-primary" onclick="addFuelEntry()"><i class="fas fa-plus"></i> Add Entry</button></div>
-    <div class="cards-grid" style="margin-bottom:16px"><div class="card" style="padding:12px;text-align:center"><div class="card-value">${totalQty} L</div><div class="card-label">Total Fuel</div></div><div class="card" style="padding:12px;text-align:center"><div class="card-value">${formatCurrency(totalAmt)}</div><div class="card-label">Total Cost</div></div></div>
-    <div class="table-container"><table><thead><tr><th>Date</th><th>Machine</th><th>Site</th><th>Qty (L)</th><th>Rate</th><th>Amount</th><th>Reading</th><th>Vendor</th></tr></thead><tbody>
+    <div class="cards-grid" style="margin-bottom:16px"><div class="card" style="padding:12px;text-align:center"><div class="card-value" id="fuel-total-qty">${totalQty} L</div><div class="card-label">Total Fuel</div></div><div class="card" style="padding:12px;text-align:center"><div class="card-value" id="fuel-total-amt">${formatCurrency(totalAmt)}</div><div class="card-label">Total Cost</div></div></div>
+    <div style="margin-bottom:12px;display:flex;gap:10px;flex-wrap:wrap">
+        <label style="font-size:13px;display:flex;align-items:center;gap:4px">From <input type="date" id="fuel-from" onchange="filterFuel()"></label>
+        <label style="font-size:13px;display:flex;align-items:center;gap:4px">To <input type="date" id="fuel-to" onchange="filterFuel()"></label>
+        <select id="fuel-site-filter" onchange="filterFuel()"><option value="">All Sites</option>${d.projects.map(p=>`<option value="${p.name}">${p.name}</option>`).join('')}</select>
+    </div>
+    <div class="table-container"><table><thead><tr><th>Date</th><th>Machine</th><th>Site</th><th>Qty (L)</th><th>Rate</th><th>Amount</th><th>Reading</th><th>Vendor</th></tr></thead><tbody id="fuel-tbody">
     ${d.machineryFuel.map(f=>`<tr><td>${f.date}</td><td>${f.machine}</td><td>${f.site}</td><td>${f.quantity}</td><td>₹${f.rate}</td><td>${formatCurrency(f.amount)}</td><td>${f.reading}</td><td>${f.vendor}</td></tr>`).join('')}
     </tbody></table></div>`;
+}
+function filterFuel(){
+    const from=document.getElementById('fuel-from').value;
+    const to=document.getElementById('fuel-to').value;
+    const site=document.getElementById('fuel-site-filter').value;
+    let rows=AppData.machineryFuel;
+    if(from)rows=rows.filter(f=>f.date>=from);
+    if(to)rows=rows.filter(f=>f.date<=to);
+    if(site)rows=rows.filter(f=>f.site===site);
+    const qty=rows.reduce((s,f)=>s+f.quantity,0),amt=rows.reduce((s,f)=>s+f.amount,0);
+    document.getElementById('fuel-total-qty').textContent=qty+' L';
+    document.getElementById('fuel-total-amt').textContent=formatCurrency(amt);
+    document.getElementById('fuel-tbody').innerHTML=rows.map(f=>`<tr><td>${f.date}</td><td>${f.machine}</td><td>${f.site}</td><td>${f.quantity}</td><td>₹${f.rate}</td><td>${formatCurrency(f.amount)}</td><td>${f.reading}</td><td>${f.vendor}</td></tr>`).join('');
 }
 function addFuelEntry(){
     const mOpts=AppData.assets.map(a=>`<option value="${a.id}">${a.id} ${a.name}</option>`).join('');

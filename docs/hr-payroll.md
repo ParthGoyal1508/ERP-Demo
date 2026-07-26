@@ -26,7 +26,7 @@ Attendance and Payroll
 - Page title "Employees"
 - Top-right: **"+ Add employee"** button (primary)
 - Filters row: Company dropdown | All statuses | All types | All projects | All documents | **Transfers** button | **Setup** button
-- Search bar: "Search name, code, mobile..."
+- Search bar: "Search name, code, mobile..." (also searches by company name)
 
 **Employee table columns:**
 | Column | Description |
@@ -36,7 +36,7 @@ Attendance and Payroll
 | Department | Civil Engineering, Accounts & Finance etc. |
 | Designation | Project Manager, Accountant etc. |
 | Mobile | 10-digit number |
-| Company | Demo Constructions Pvt Ltd |
+| Company | Demo Constructions Pvt Ltd / Demo Infra Projects Pvt Ltd |
 | Project | NH-48 O&M etc. |
 | Documents | Progress bar showing X/3 docs uploaded |
 | Status | Active (green badge) |
@@ -63,50 +63,201 @@ Attendance and Payroll
 | DEMO-0014 | Kamla Devi | Site Operations & Maintenance | Helper | 9820000182 | NH-48 O&M |
 | DEMO-0015 | Bheru Lal | Health, Safety & Environment | Security Guard | 9820000195 | NH-48 O&M |
 
+**Employees from second company (Demo Infra Projects Pvt Ltd):**
+
+| Code | Name | Department | Designation | Mobile | Project |
+|---|---|---|---|---|---|
+| DEMO-0101 | Naresh Gupta | Civil Engineering | Site Engineer | 9820001001 | SH-22 Maintenance |
+| DEMO-0102 | Mahesh Jangid | Site Operations & Maintenance | Supervisor | 9820001002 | SH-22 Maintenance |
+| DEMO-0103 | Ram Singh | Electrical & Mechanical | Electrician | 9820001003 | SH-22 Maintenance |
+| DEMO-0104 | Shankar Lal | Plant & Machinery | Operator | 9820001004 | SH-22 Maintenance |
+
+**Pagination:**
+- Table shows first 15 employees by default
+- **"Load more"** button at the bottom loads the next batch
+- Pagination info text: "Showing X of Y employees"
+
 **Documents column:**
 - Shows a colored progress bar: 3/3 docs = full green, 2/3 = yellow, 1/3 = orange, 0/3 = red
+- Employees with no docs show "—" (dash)
 - Clicking opens a document status mini-modal
 
-**Add Employee modal/form:**
+**Add Employee modal (tabbed layout):**
 
-Fields grouped in sections:
+Large modal with 8 horizontal tabs at the top. Clicking a tab switches the form content below. Tabs have active state highlighting.
 
-*Basic Info:*
-- Employee Code (auto-generated, editable)
-- Full Name
-- Date of Birth
-- Gender (dropdown)
-- Photo upload (mocked)
+**Tabs:** Identity | Employment | Statutory | Pay & Bank | Contact | Documents | Letters | Onboarding
 
-*Employment Details:*
-- Company (dropdown)
-- Department (dropdown)
-- Designation (text)
-- Employment Type (dropdown: Full Time / Contract / Daily Wage)
-- Date of Joining
-- Project (dropdown)
+---
 
-*Contact Info:*
-- Mobile
-- Alternate Mobile
-- Email
-- Address
+*Tab 1 — Identity:*
+| Field | Type |
+|---|---|
+| Company | Dropdown (from companies list) |
+| Code Series | Dropdown (EMP / DEMO / CONT) |
+| Employee Code | Auto-generated, editable |
+| First Name | Text |
+| Last Name | Text |
+| Date of Birth | Date picker |
+| Gender | Dropdown (Male / Female / Other) |
+| Marital Status | Dropdown (Single / Married / Widowed / Divorced) |
+| Photo | File upload (mocked — shows avatar preview) |
 
-*Salary Info:*
-- Basic Salary
-- HRA
-- Conveyance Allowance
-- Site Allowance
-- PF applicable (toggle)
-- ESIC applicable (toggle)
+---
 
-*Bank Details:*
-- Bank Name
-- Account Number
-- IFSC Code
-- UAN Number
+*Tab 2 — Employment:*
+| Field | Type |
+|---|---|
+| Department | Dropdown |
+| Designation | Text |
+| Employment Type | Dropdown (Full Time / Contract / Daily Wage) |
+| Date of Joining | Date picker |
+| Probation End Date | Date picker |
+| Project / Site | Dropdown (from projects list) |
+| Reporting To | Dropdown (from employees list) |
+| Shift | Dropdown (General / Morning / Night) |
+| Confirmation Date | Date picker |
 
-**On submit:** New row appears in table, toast "Employee added successfully", documents progress shows 0/3.
+---
+
+*Tab 3 — Statutory:*
+| Field | Type |
+|---|---|
+| PF Applicable | Toggle (Yes/No) |
+| UAN Number | Text |
+| PF Number | Text |
+| ESIC Applicable | Toggle (Yes/No) |
+| ESIC Number | Text |
+| Aadhar Number | Text (12 digits) |
+| PAN Number | Text (ABCDE1234F format) |
+
+---
+
+*Tab 4 — Pay & Bank:*
+| Field | Type |
+|---|---|
+| Basic Salary | Number |
+| HRA | Number |
+| Conveyance Allowance | Number |
+| Site Allowance | Number |
+| Special Allowance | Number |
+| Payment Mode | Dropdown (Bank / Cash / Cheque) |
+| Bank Name | Text |
+| Account Number | Text |
+| IFSC Code | Text |
+| Branch | Text |
+
+---
+
+*Tab 5 — Contact:*
+| Field | Type |
+|---|---|
+| Mobile | Text (10-digit) |
+| Alternate Mobile | Text |
+| Email | Email |
+| Permanent Address | Textarea |
+| Current Address | Textarea |
+| Emergency Contact Name | Text |
+| Emergency Contact Number | Text |
+| Emergency Relationship | Dropdown (Father / Mother / Spouse / Sibling / Other) |
+
+---
+
+*Tab 6 — Documents:*
+| Field | Type |
+|---|---|
+| Aadhar Card | File upload (PDF/JPG/PNG) |
+| PAN Card | File upload (PDF/JPG/PNG) |
+| Photo | File upload (JPG/PNG) |
+| Bank Passbook / Cancelled Cheque | File upload (PDF/JPG/PNG) |
+| Education Certificates | File upload (PDF, multiple) |
+| Experience Letters | File upload (PDF, multiple) |
+
+- Each doc slot shows: Upload button + file name after upload + remove (×) button
+- Documents count (for table progress bar) = number of uploaded files out of 3 mandatory (Aadhar, PAN, Photo)
+- Accepted formats: PDF, JPG, JPEG, PNG
+- Max file size display: "Max 5 MB per file" (mocked — no real validation)
+
+---
+
+*Tab 7 — Letters:*
+| Field | Type |
+|---|---|
+| Offer Letter Issued | Toggle (Yes/No) |
+| Offer Letter Date | Date picker |
+| Appointment Letter Issued | Toggle (Yes/No) |
+| Appointment Letter Date | Date picker |
+| NDA Signed | Toggle (Yes/No) |
+
+- Info text: "Letters can be generated from Templates after saving the employee."
+
+---
+
+*Tab 8 — Onboarding:*
+| Checklist Item | Type |
+|---|---|
+| ID Card Issued | Checkbox |
+| Uniform Issued | Checkbox |
+| Safety Induction Done | Checkbox |
+| Tools / Equipment Issued | Checkbox |
+| Bank Account Verified | Checkbox |
+| Biometric Enrolled | Checkbox |
+| Site Access Granted | Checkbox |
+
+- Progress bar at top: "Onboarding Progress: X/7 complete"
+- Info text: "Complete all items to mark employee as fully onboarded."
+
+---
+
+**Modal Footer:**
+- Left side: current tab indicator (e.g. "Step 1 of 8")
+- Right side: "Cancel" (secondary) | "← Previous" (shown from tab 2 onwards) | "Next →" (tabs 1–7) | "Save Employee" (tab 8 only, primary)
+
+**On submit:** New row appears in table, toast "Employee added successfully", documents progress shows X/3 based on uploaded docs.
+
+---
+
+**Setup button** (top-right toolbar):
+
+Opens the "Employee Setup" modal — a tabbed configuration panel for managing HR reference data. See [settings.md → EMPLOYEE SETUP](settings.md) for full details.
+
+**Tabs:** Code Series | Departments | Designations | Document Types | Shifts
+
+- **Code Series** — Manage employee code prefixes per company (EMP, DEMO, CONT etc.)
+- **Departments** — Master list of departments used in Add Employee dropdown
+- **Designations** — Master list of designations
+- **Document Types** — Configure document types with flags (Mandatory, MandatoryNumber, ExpiryNumber, Expiry, Number), sort order, and edit action. Determines the Documents progress bar requirements.
+- **Shifts** — Define work shifts (General, Morning, Night) with start/end times
+
+Each tab has a **"+ New"** button to add entries, and each row has an Edit icon.
+
+---
+
+**Transfers button** (top-right toolbar):
+
+Opens the "Employee Transfer" modal for inter-company transfers.
+
+**Transfer modal fields:**
+| Field | Type |
+|---|---|
+| Employee | Searchable dropdown (from employees list) |
+| Current Company | Read-only (auto-populated from selected employee) |
+| Current Project | Read-only (auto-populated) |
+| Transfer To Company | Dropdown (from companies list, excluding current) |
+| Transfer To Project | Dropdown (from projects list) |
+| Transfer Date | Date picker (defaults to today) |
+| Reason | Textarea |
+| Retain Employee Code | Toggle (Yes/No — default Yes) |
+
+**Behaviors:**
+- On submit: employee's company and project fields are updated
+- Toast: "Employee transferred successfully"
+- Transfer history is logged (viewable in Employee detail → Employment tab)
+- Bulk transfer: checkbox column allows selecting multiple employees to transfer at once
+- If "Retain Employee Code" is No, a new code is generated with the target company's series
+
+---
+
 
 **Employee detail page** (clicking employee name or view icon):
 
@@ -168,8 +319,22 @@ Tabs:
   - Mock location | Ramesh Kumar (EMP-0001) | 17 Jul 2026 | ±8m | 26.912400, 75.787300 | "Mock/fake GPS detected — punch rejected"
 
 **Modifications modal** (top-right button):
+- Title: "Attendance Modifications"
 - Shows a log of all manual attendance edits
-- Columns: Employee | Original In | Original Out | Modified In | Modified Out | Modified By | Date | Reason
+- Columns: Employee | Date | Original Status | New Status | Modified By | Modified On | Reason
+
+**Pre-populated modifications:**
+| Employee | Date | Original | New | Modified By | Modified On | Reason |
+|---|---|---|---|---|---|---|
+| Vikram Meena | 20 Jul 2026 | Absent | Present | Admin | 21 Jul 2026 | Forgot to punch — verified by supervisor |
+| Sita Devi | 18 Jul 2026 | Half Day | Complete | Admin | 19 Jul 2026 | App crash, second punch not recorded |
+| Bhanwar Lal | 15 Jul 2026 | Present | On Leave | Admin | 16 Jul 2026 | Leave applied retroactively |
+
+**Behaviors:**
+- Every manual edit to attendance creates a modification log entry automatically
+- Modification log provides audit trail for compliance
+- Cannot delete modification entries
+- Shows who made the change, when, and why
 
 **Holidays modal** (top-right button):
 - Table of declared holidays for the year
