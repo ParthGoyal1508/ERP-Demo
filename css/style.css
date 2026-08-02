@@ -249,3 +249,30 @@ table .actions .btn-view:hover { background: #f5f3ff; }
     .gps-grid { grid-template-columns: 1fr; }
     .slip-summary { grid-template-columns: 1fr 1fr; }
 }
+/* ===== PRD / DOCS ===== */
+.prd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 4px; }
+.prd-card { background: #fff; border-radius: 10px; padding: 24px; cursor: pointer; transition: box-shadow .2s, transform .15s; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+.prd-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,.12); transform: translateY(-2px); }
+.prd-card-icon { font-size: 28px; margin-bottom: 12px; }
+.prd-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; color: #1f2937; }
+.prd-card p { font-size: 13px; color: #6b7280; line-height: 1.5; margin-bottom: 12px; }
+.prd-card-link { font-size: 13px; font-weight: 500; color: #3b82f6; }
+.prd-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #6b7280; margin-bottom: 8px; }
+.prd-back:hover { color: #3b82f6; }
+.prd-loading { text-align: center; padding: 60px; color: #9ca3af; font-size: 15px; }
+.prd-article { background: #fff; border-radius: 10px; padding: 36px 40px; max-width: 900px; box-shadow: 0 1px 3px rgba(0,0,0,.06); line-height: 1.7; }
+.prd-h1 { font-size: 24px; font-weight: 700; color: #111827; margin: 0 0 8px; }
+.prd-h2 { font-size: 20px; font-weight: 700; color: #1f2937; margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #e5e7eb; }
+.prd-h3 { font-size: 17px; font-weight: 600; color: #374151; margin: 22px 0 8px; }
+.prd-h4 { font-size: 15px; font-weight: 600; color: #4b5563; margin: 16px 0 6px; }
+.prd-hr { border: none; border-top: 1px solid #e5e7eb; margin: 20px 0; }
+.prd-p { margin: 6px 0; color: #374151; }
+.prd-list { margin: 6px 0 6px 20px; color: #374151; }
+.prd-list li { margin: 3px 0; }
+.prd-code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-size: 13px; font-family: 'SF Mono', Consolas, monospace; color: #dc2626; }
+.prd-table-wrap { overflow-x: auto; margin: 12px 0; }
+.prd-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.prd-table th { background: #f9fafb; padding: 10px 14px; text-align: left; font-weight: 600; color: #374151; border-bottom: 2px solid #e5e7eb; }
+.prd-table td { padding: 8px 14px; border-bottom: 1px solid #f3f4f6; color: #4b5563; }
+.prd-table tr:hover td { background: #f9fafb; }
+@media (max-width: 768px) { .prd-article { padding: 20px 16px; } .prd-grid { grid-template-columns: 1fr; } }

@@ -54,7 +54,8 @@ function handleRoute(){
         case '/settings/companies':renderCompanies(c);break;
         case '/settings/users':renderSettingsUsers(c);break;
         case '/settings/roles':renderSettingsRoles(c);break;
-        default:c.innerHTML='<div class="empty-state"><i class="fas fa-file"></i><p>Page not found</p></div>';
+        case '/docs':renderDocsIndex(c);break;
+        default:if(route.startsWith('/docs/')){renderPrdPage(c,route.replace('/docs/',''));}else{c.innerHTML='<div class="empty-state"><i class="fas fa-file"></i><p>Page not found</p></div>';}
     }
 }
 function toggleSidebar(){const s=document.getElementById('sidebar');s.classList.toggle('collapsed');s.classList.toggle('open');}
